@@ -21,185 +21,100 @@
         </div>
         <ul>
           <li><a href="#">Home</a></li>
-          <li><a href="#">Scorecard</a></li>
-          <li><a href="#">Courses</a></li>
-          <li><a href="#stats">Stats</a></li>
+          <li><a href="#shots">Shots</a></li>
+          <li><a href="#short-game">Short Game</a></li>
         </ul>
-        <div class="nav-hcp" aria-label="Handicap">
-          <span class="hcp-label">HCP</span>
-          <span class="hcp-value">+2</span>
-        </div>
       </nav>
     </header>
 
     <main>
+
+      <!-- ── HERO ── -->
       <section id="hero">
         <div class="hero-bg-text" aria-hidden="true">GOLF</div>
-
         <div class="hero-inner">
           <div class="hero-eyebrow">
             <span class="eyebrow-rule"></span>
             <span>Est. 2026</span>
             <span class="eyebrow-rule"></span>
           </div>
-
           <h2 class="hero-title">
             <span class="title-line">Master</span>
             <span class="title-line title-outline">Your</span>
             <span class="title-line">Game</span>
           </h2>
-
-          <p class="hero-sub">Track your rounds, perfect your shots, own the course.</p>
-
+          <p class="hero-sub">14 shot types. 3 release techniques. Everything you need on the course.</p>
           <div class="hero-actions">
-            <a href="#shots" class="btn-primary">View Shot Guide</a>
-            <a href="#stats" class="btn-ghost">Your Stats →</a>
+            <a href="#shots" class="btn-primary">Shot Library</a>
+            <a href="#short-game" class="btn-ghost">Short Game →</a>
           </div>
-
-          <div class="hero-scorecard" aria-label="Sample scorecard">
-            <div class="sc-head">
-              <span>Hole</span><span>Par</span><span>Yards</span><span>Score</span>
-            </div>
-            <div class="sc-row"><span>1</span><span>4</span><span>432</span><span class="sc-birdie">3</span></div>
-            <div class="sc-row"><span>2</span><span>3</span><span>185</span><span class="sc-par">3</span></div>
-            <div class="sc-row"><span>3</span><span>5</span><span>545</span><span class="sc-birdie">4</span></div>
-            <div class="sc-row"><span>4</span><span>4</span><span>398</span><span class="sc-bogey">5</span></div>
+          <div class="hero-pills" aria-hidden="true">
+            <span class="hero-pill">14 shots</span>
+            <span class="hero-pill-sep">·</span>
+            <span class="hero-pill">3 releases</span>
+            <span class="hero-pill-sep">·</span>
+            <span class="hero-pill">4 categories</span>
           </div>
         </div>
       </section>
 
-      <section id="stats" aria-label="Quick stats">
-        <div class="stats-strip">
-          <div class="stat-item">
-            <span class="stat-value">+2</span>
-            <span class="stat-label">Handicap</span>
-          </div>
-          <span class="stat-divider" aria-hidden="true"></span>
-          <div class="stat-item">
-            <span class="stat-value">74.3</span>
-            <span class="stat-label">Avg Score</span>
-          </div>
-          <span class="stat-divider" aria-hidden="true"></span>
-          <div class="stat-item">
-            <span class="stat-value">68%</span>
-            <span class="stat-label">Fairways Hit</span>
-          </div>
-          <span class="stat-divider" aria-hidden="true"></span>
-          <div class="stat-item">
-            <span class="stat-value">7</span>
-            <span class="stat-label">Shot Types</span>
-          </div>
-          <span class="stat-divider" aria-hidden="true"></span>
-          <div class="stat-item">
-            <span class="stat-value">31</span>
-            <span class="stat-label">Putts / Round</span>
-          </div>
-        </div>
-      </section>
-
+      <!-- ── SHOT LIBRARY ── -->
       <section id="shots">
         <div class="shots-header">
           <div class="shots-header-top">
             <span class="section-tag">Technique Library</span>
-            <span class="section-count" aria-label="7 shot types">07</span>
+            <span class="section-count" aria-label="14 shot types">14</span>
           </div>
-          <h2>How to Play Different Shots</h2>
+          <h2>Shot Library</h2>
           <div class="section-rule" aria-hidden="true"></div>
         </div>
 
-        <div class="shots-grid">
-
-          <article class="shot featured" data-hole="01">
-            <div class="shot-left">
-              <div class="shot-meta">
-                <span class="shot-club">1W</span>
-                <span class="shot-diff" aria-label="Difficulty: 3 of 3">
-                  <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span>
-                </span>
-              </div>
-              <h3>Drive</h3>
-              <div class="shot-tip">Key: Wide stance + full shoulder turn</div>
-            </div>
-            <div class="shot-right">
-              <p>Use your driver (1-wood) for maximum distance off the tee. Tee the ball high, widen your stance, and sweep through the ball with a full shoulder turn. Focus on a smooth tempo rather than swinging hard.</p>
-            </div>
-          </article>
-
-          <article class="shot" data-hole="02">
-            <div class="shot-meta">
-              <span class="shot-club">3W</span>
-              <span class="shot-diff" aria-label="Difficulty: 2 of 3">
-                <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
-              </span>
-            </div>
-            <h3>Fairway Wood</h3>
-            <p>Used for long shots from the fairway. Play the ball slightly forward in your stance and brush the turf through impact. Great for par-5 second shots.</p>
-            <div class="shot-tip">Key: Brush the turf, don't dig</div>
-          </article>
-
-          <article class="shot" data-hole="03">
-            <div class="shot-meta">
-              <span class="shot-club">5I</span>
-              <span class="shot-diff" aria-label="Difficulty: 2 of 3">
-                <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
-              </span>
-            </div>
-            <h3>Iron Shot</h3>
-            <p>Irons are used for approach shots to the green. Ball position moves progressively back toward centre as irons get shorter. Strike down and through the ball, taking a divot after impact.</p>
-            <div class="shot-tip">Key: Descending strike, divot after ball</div>
-          </article>
-
-          <article class="shot" data-hole="04">
-            <div class="shot-meta">
-              <span class="shot-club">CHP</span>
-              <span class="shot-diff" aria-label="Difficulty: 1 of 3">
-                <span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
-              </span>
-            </div>
-            <h3>Chip</h3>
-            <p>A low-running shot played from just off the green. Use a 7–9 iron or wedge with a narrow stance, hands ahead of the ball, and a short putting-style stroke. Aim to land the ball just on the green and let it run to the hole.</p>
-            <div class="shot-tip">Key: Hands forward, minimal wrist</div>
-          </article>
-
-          <article class="shot" data-hole="05">
-            <div class="shot-meta">
-              <span class="shot-club">PW</span>
-              <span class="shot-diff" aria-label="Difficulty: 2 of 3">
-                <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
-              </span>
-            </div>
-            <h3>Pitch</h3>
-            <p>A higher, shorter shot into the green from 20–100 yards. Open your stance slightly, hinge the wrists on the backswing, and accelerate through impact. Use a pitching or sand wedge.</p>
-            <div class="shot-tip">Key: Hinge wrists, accelerate through</div>
-          </article>
-
-          <article class="shot" data-hole="06">
-            <div class="shot-meta">
-              <span class="shot-club">SW</span>
-              <span class="shot-diff" aria-label="Difficulty: 3 of 3">
-                <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span>
-              </span>
-            </div>
-            <h3>Bunker Shot</h3>
-            <p>From a greenside bunker, open the clubface and your stance, aim 2 inches behind the ball, and splash the sand out with the ball. Don't try to hit the ball directly — let the sand do the work.</p>
-            <div class="shot-tip">Key: Hit sand 2" behind, open face</div>
-          </article>
-
-          <article class="shot wide" data-hole="07">
-            <div class="shot-meta">
-              <span class="shot-club">PUT</span>
-              <span class="shot-diff" aria-label="Difficulty: 1 of 3">
-                <span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
-              </span>
-            </div>
-            <h3>Putt</h3>
-            <p>Use your putter on the green. Keep your eyes over the ball, use a pendulum stroke with no wrist break, and focus on consistent tempo. Read the slope of the green to judge the line.</p>
-            <div class="shot-tip">Key: Eyes over ball, pendulum stroke, read the green</div>
-          </article>
-
+        <div class="cat-filter" role="tablist" aria-label="Filter by category">
+          <button class="cat-btn active" data-cat="all" role="tab" aria-selected="true">All</button>
+          <button class="cat-btn" data-cat="shape" role="tab" aria-selected="false">Shape</button>
+          <button class="cat-btn" data-cat="control" role="tab" aria-selected="false">Control</button>
+          <button class="cat-btn" data-cat="shortgame" role="tab" aria-selected="false">Short Game</button>
+          <button class="cat-btn" data-cat="specialty" role="tab" aria-selected="false">Specialty</button>
         </div>
+
+        <div class="shots-grid" id="shotsGrid" aria-live="polite"></div>
       </section>
+
+      <!-- ── SHORT GAME ── -->
+      <section id="short-game">
+        <div class="sg-header">
+          <div class="shots-header-top">
+            <span class="section-tag">Around the Green</span>
+            <span class="section-count" aria-label="3 releases">3</span>
+          </div>
+          <h2>Dan Grieve's 3 Releases</h2>
+          <p class="sg-intro">Master three hand-release techniques and you have an answer for every situation around the green.</p>
+          <div class="section-rule" aria-hidden="true"></div>
+        </div>
+
+        <!-- Decision Tree -->
+        <div class="decision-tree">
+          <div class="dt-header">
+            <span class="section-tag">Decision Tree</span>
+            <h3>Find Your Release</h3>
+            <p class="dt-desc">Answer three questions to be routed to the right technique for your situation.</p>
+          </div>
+          <div class="dt-steps" id="dtSteps"></div>
+          <div class="dt-result" id="dtResult" aria-live="polite"></div>
+          <button class="dt-reset" id="dtReset" hidden>↺ Start again</button>
+        </div>
+
+        <!-- Release Cards -->
+        <div class="releases-grid" id="releasesGrid"></div>
+      </section>
+
     </main>
+
+    <!-- Shot detail panel -->
+    <div class="shot-panel" id="shotPanel" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Shot detail">
+      <div class="panel-inner" id="panelInner"></div>
+    </div>
+    <div class="panel-overlay" id="panelOverlay"></div>
 
     <footer>
       <div class="footer-inner">

@@ -1545,3 +1545,406 @@ function openGuidePanel(id) {
 /* ── Init ── */
 renderCorePrinciples();
 renderSituationGuides();
+
+/* ─────────────────────────────────────────────────────────────
+   EXCUSES
+───────────────────────────────────────────────────────────── */
+
+/* ── 20 Roulette excuses ── */
+const ROULETTE_EXCUSES = [
+  "The wind changed direction mid-swing. You simply cannot prepare for that.",
+  "I was playing with a borrowed driver. The shaft flex was completely wrong for my tempo.",
+  "My back has been a problem all week. I was essentially playing injured.",
+  "The greens were inconsistent — some fast, some slow. My pace was calibrated for a course that didn't exist.",
+  "I had a lot on my mind. Work stuff. It's difficult to compartmentalise at this level.",
+  "I'm in the middle of a swing change. You can't score when you're rebuilding from the ground up.",
+  "The rough on this course is penal. Nobody gets a clean strike from lies like that.",
+  "I haven't played in three weeks. You lose it quickly at this standard.",
+  "My rangefinder was giving me wrong numbers. I was never hitting the right club.",
+  "The sun was directly in my eyes on four approach shots in a row. Nothing you can do.",
+  "These shoes are brand new. I couldn't get my footing on the downhill lies.",
+  "The slow play destroyed my rhythm. Six hours on a course kills any game.",
+  "I was dehydrated. Didn't realise until the back nine. By then the damage was done.",
+  "The yardages on the scorecard were wrong. I was making decisions off bad information all day.",
+  "The course was playing two clubs longer than the card. It wasn't just me.",
+  "My left hamstring locked up on the 11th. I was compensating on every swing after that.",
+  "I could never get into a good headspace. Some days the mental side just isn't there.",
+  "The greens were double-cut and lightning fast. My pace control is built for normal conditions.",
+  "I gave my caddie the wrong number and didn't question it. That's on both of us.",
+  "I had one too many last night. Not ideal preparation. I'm owning that one."
+];
+
+/* ── Excuse Library data ── */
+const EXCUSE_LIBRARY = {
+  conditions: {
+    label: 'The Conditions',
+    excuses: [
+      {
+        text: "The wind was swirling the entire round. There's nothing consistent you can do when the wind swirls — it catches the ball at the peak of the flight and takes it wherever it wants.",
+        tip: "Deliver with resignation. You've accepted forces beyond your control."
+      },
+      {
+        text: "The sun was directly into my eyes on the approach shots. Four holes in a row. I couldn't pick up the flag properly on any of them.",
+        tip: "Squint slightly as you say this. The look does 40% of the work."
+      },
+      {
+        text: "The greens were completely inconsistent — some running fast, some slow. You cannot find your pace when every green is playing differently.",
+        tip: "Shake your head slowly. The injustice must be visible on your face."
+      },
+      {
+        text: "The course was playing two clubs longer than the card. It wasn't just me — everyone in the group was coming up short.",
+        tip: "Referencing how others suffered too adds significant credibility."
+      },
+      {
+        text: "The rough was genuinely penal. You get a bad kick off the fairway and you're hacking it out sideways. That happened to me twice on the back nine.",
+        tip: "Demonstrate the sideways hack with your hands. Physical evidence helps."
+      },
+      {
+        text: "It rained overnight and the fairways were waterlogged. The ball wasn't running and all my distances were off the entire round.",
+        tip: "Nod knowingly while saying this, as if a single data point explains a complete collapse."
+      }
+    ]
+  },
+  equipment: {
+    label: 'The Equipment',
+    excuses: [
+      {
+        text: "I was using a borrowed driver. The shaft flex was completely wrong for my tempo — too stiff. I was fighting it off every tee.",
+        tip: "Say 'shaft flex' with authority. Most people won't question the specifics."
+      },
+      {
+        text: "I put a new ball on the first tee and played it all day. Different ball, different feel, different distances. I should have stuck with what I know.",
+        tip: "Say it with a self-deprecating laugh. It sounds experienced."
+      },
+      {
+        text: "My grips are worn. I've been meaning to get them redone for two months. Today they finally cost me.",
+        tip: "Show your hands as you say it. The physical gesture is very persuasive."
+      },
+      {
+        text: "My rangefinder was giving me readings that were clearly off, but I only worked that out after the round. I was hitting the wrong club all day.",
+        tip: "Check your phone while saying this. It adds visual credibility."
+      },
+      {
+        text: "The face on my wedge is smooth. I've played too many rounds with it and the spin is gone. Everything was coming out hot with no check.",
+        tip: "If you can produce the wedge and show the face, do it. Physical evidence is powerful."
+      }
+    ]
+  },
+  body: {
+    label: 'The Body',
+    excuses: [
+      {
+        text: "My back has been an issue all week. I'm seeing a physio on Tuesday. Today I was essentially managing it around the course rather than playing.",
+        tip: "Touch your lower back briefly. A suppressed wince is optional but effective."
+      },
+      {
+        text: "My left hamstring went on the 11th. Once that happens you're compensating on every swing through to the finish — it throws the entire sequence off.",
+        tip: "Name the specific hole. One detail makes everything else believable."
+      },
+      {
+        text: "I was dehydrated. I didn't drink enough before the round and by the back nine I was running on empty. It affects concentration and timing simultaneously.",
+        tip: "Drink from your water bottle immediately after saying this."
+      },
+      {
+        text: "These shoes are brand new. I had no grip on my trail foot and couldn't commit through the shot properly, especially on the downhill lies.",
+        tip: "Look down at your shoes as if they have betrayed you personally."
+      },
+      {
+        text: "The elbow has been giving me trouble since March. I'm not telling people because I don't want to make excuses — but today it genuinely affected my swing.",
+        tip: "The phrase 'I don't want to make excuses' before an excuse is extraordinarily powerful. Pause after it."
+      },
+      {
+        text: "I had a terrible night's sleep. In bed but my mind was racing. You cannot perform in any sport on five hours — golf is absolutely no exception.",
+        tip: "Look tired when you deliver this. The look does 40% of the work."
+      }
+    ]
+  },
+  course: {
+    label: 'The Course',
+    excuses: [
+      {
+        text: "The yardages on the scorecard were wrong. I double-checked after the round and three of them were at least ten yards out. I was never hitting the right club.",
+        tip: "Produce your scorecard and point at it. Numbers on paper are very convincing."
+      },
+      {
+        text: "That pin placement on 14 was genuinely unfair. Two paces from the edge with a slope that feeds everything left and into the bunker. Nobody in the field could get close to it.",
+        tip: "Name the specific hole. A specific hole is believable. 'A hole' is not."
+      },
+      {
+        text: "The slow play completely destroyed my rhythm. We were waiting on every tee box from the 4th onwards. You lose your flow and you simply never get it back.",
+        tip: "Sound tired and slightly defeated. The slow play excuse always finds a sympathetic audience."
+      },
+      {
+        text: "The bunkers had no sand in them. I had a fried egg lie on the 8th that I simply could not do anything constructive with. That is a course maintenance issue.",
+        tip: "Use the phrase 'course maintenance issue'. It sounds technical and deflects blame onto an institution."
+      },
+      {
+        text: "The fairway on 16 kicks everything right toward the water. It's a design flaw. Nobody in our group held the fairway there regardless of where we aimed.",
+        tip: "Get at least one other player to corroborate this. Group excuses are significantly more powerful than solo excuses."
+      }
+    ]
+  },
+  mind: {
+    label: 'The Mind',
+    excuses: [
+      {
+        text: "I couldn't get into it today. Some days the mental side simply isn't there and you can feel it from the first tee. Nothing clicks and nothing you try changes that.",
+        tip: "Deliver with quiet acceptance, not frustration. Serene disappointment sounds more genuine."
+      },
+      {
+        text: "It's been a brutal week at work. I've been carrying a lot mentally and it follows you onto the course whether you want it to or not.",
+        tip: "Stay vague about the work details. The less specific, the more universal the sympathy."
+      },
+      {
+        text: "I'm going through a swing change. My coach and I are rebuilding the takeaway and it's in that awkward phase where the old move is gone and the new one isn't automatic yet.",
+        tip: "Mention 'my coach'. It signals investment in improvement, which brilliantly deflects blame."
+      },
+      {
+        text: "Today was essentially a practice round. I was working on specific things rather than scoring. You genuinely cannot do both at the same time.",
+        tip: "Best used on a course you know well. Saying it on the first tee is an even more powerful preemptive version."
+      },
+      {
+        text: "I was giving advice to the other guys in the group and it disrupted my own focus. It's very hard to switch between coaching mode and playing mode mid-round.",
+        tip: "This one works best when you have clearly played the worst in the group. Lean into the irony."
+      }
+    ]
+  }
+};
+
+/* ─────────────────────────────────────────────────────────────
+   01 — ROULETTE
+───────────────────────────────────────────────────────────── */
+(function initRoulette() {
+  const display  = document.getElementById('rouletteDisplay');
+  const spinBtn  = document.getElementById('rouletteSpinBtn');
+  const copyBtn  = document.getElementById('rouletteCopyBtn');
+  let spinning   = false;
+  let landed     = '';
+
+  spinBtn.addEventListener('click', () => {
+    if (spinning) return;
+    spinning = true;
+    copyBtn.hidden = true;
+    spinBtn.textContent = 'Spinning\u2026';
+    spinBtn.disabled = true;
+
+    const steps    = 12;
+    const delay    = 100;
+    let   count    = 0;
+    const winner   = ROULETTE_EXCUSES[Math.floor(Math.random() * ROULETTE_EXCUSES.length)];
+
+    const tick = setInterval(() => {
+      count++;
+      const current = count < steps
+        ? ROULETTE_EXCUSES[Math.floor(Math.random() * ROULETTE_EXCUSES.length)]
+        : winner;
+
+      display.innerHTML = `<p class="roulette-text cycling">${current}</p>`;
+      void display.querySelector('.roulette-text').offsetWidth; // force reflow for animation
+
+      if (count >= steps) {
+        clearInterval(tick);
+        landed = winner;
+        display.innerHTML = `<p class="roulette-text landed">"${winner}"</p>`;
+        copyBtn.hidden = false;
+        spinBtn.textContent = 'Spin Again';
+        spinBtn.disabled = false;
+        spinning = false;
+      }
+    }, delay);
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!landed) return;
+    navigator.clipboard.writeText(landed).then(() => {
+      copyBtn.textContent = 'Copied \u2713';
+      setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+    });
+  });
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   02 — AI EXCUSE GENERATOR
+───────────────────────────────────────────────────────────── */
+(function initAiExcuse() {
+  const textarea   = document.getElementById('whatHappenedInput');
+  const genBtn     = document.getElementById('generateExcuseBtn');
+  const resultEl   = document.getElementById('aiExcuseResult');
+
+  textarea.addEventListener('input', () => {
+    genBtn.disabled = textarea.value.trim().length === 0;
+  });
+
+  genBtn.addEventListener('click', () => {
+    const key = localStorage.getItem('anthropic_api_key');
+    if (!key) { openApiModal(); return; }
+    runAiExcuse(key);
+  });
+
+  async function runAiExcuse(apiKey) {
+    genBtn.disabled = true;
+    genBtn.textContent = 'Generating\u2026';
+    resultEl.hidden = false;
+    resultEl.innerHTML = `
+      <div class="plan-loading">
+        <div class="plan-spinner"></div>
+        <p>Crafting your excuse\u2026</p>
+      </div>
+    `;
+
+    const what   = textarea.value.trim();
+    const prompt = [
+      'You are a golf excuse consultant. The user played golf and this is what actually happened:',
+      '"' + what + '"',
+      '',
+      'Generate a creative, plausible excuse that deflects blame away from their skill.',
+      'The excuse should sound sincere and use golf-specific language.',
+      'Respond ONLY in JSON, no markdown:',
+      '{',
+      '  "excuse": "",',
+      '  "deliveryTip": "",',
+      '  "confidenceRating": "Bulletproof",',
+      '  "backupExcuse": ""',
+      '}',
+      '',
+      'confidenceRating must be exactly one of: Bulletproof, Solid, Risky'
+    ].join('\n');
+
+    try {
+      const raw    = await callAnthropicAPI(prompt, apiKey);
+      const result = JSON.parse(raw.replace(/```json|```/g, '').trim());
+      renderAiResult(result);
+    } catch (err) {
+      resultEl.innerHTML = `
+        <div class="plan-error">
+          <strong>Generation failed.</strong>
+          <p>${err.message || 'Check your API key and try again.'}</p>
+        </div>
+      `;
+    } finally {
+      genBtn.disabled = false;
+      genBtn.textContent = 'Generate Excuse';
+    }
+  }
+
+  function renderAiResult(r) {
+    const ratingClass = {
+      'Bulletproof': 'rating--gold',
+      'Solid':       'rating--blue',
+      'Risky':       'rating--claret'
+    }[r.confidenceRating] || 'rating--blue';
+
+    resultEl.innerHTML = `
+      <div class="ai-result-card">
+        <div class="ai-result-top">
+          <span class="ai-result-label">Your excuse</span>
+          <span class="confidence-badge ${ratingClass}">${r.confidenceRating}</span>
+        </div>
+        <blockquote class="ai-excuse-text">"${r.excuse}"</blockquote>
+        <button class="excuse-copy-btn" data-text="${r.excuse.replace(/"/g, '&quot;')}" aria-label="Copy excuse">Copy</button>
+        <div class="ai-delivery-tip">
+          <span class="ai-tip-label">Delivery tip</span>
+          <p>${r.deliveryTip}</p>
+        </div>
+        <div class="ai-backup">
+          <span class="ai-tip-label">Backup excuse</span>
+          <p class="ai-backup-text">"${r.backupExcuse}"</p>
+        </div>
+        <div class="ai-result-actions">
+          <button class="plan-rekey-btn" id="aiTryAgainBtn">Try Again</button>
+          <button class="plan-rekey-btn" id="aiRekeyBtn2">Update API Key</button>
+        </div>
+      </div>
+    `;
+
+    resultEl.querySelector('.excuse-copy-btn').addEventListener('click', e => {
+      const btn  = e.currentTarget;
+      const text = r.excuse;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied \u2713';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    });
+
+    document.getElementById('aiTryAgainBtn').addEventListener('click', () => {
+      resultEl.hidden = true;
+      resultEl.innerHTML = '';
+      textarea.value = '';
+      genBtn.disabled = true;
+      textarea.focus();
+    });
+
+    document.getElementById('aiRekeyBtn2').addEventListener('click', openApiModal);
+    resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   03 — EXCUSE LIBRARY
+───────────────────────────────────────────────────────────── */
+(function initExcuseLibrary() {
+  const filterEl = document.getElementById('libraryFilter');
+  const gridEl   = document.getElementById('libraryGrid');
+  const cats     = Object.keys(EXCUSE_LIBRARY);
+  let   active   = cats[0];
+
+  /* filter pills */
+  filterEl.innerHTML = cats.map(cat => `
+    <button
+      class="lib-pill${cat === active ? ' active' : ''}"
+      data-cat="${cat}"
+      role="tab"
+      aria-selected="${cat === active}"
+    >${EXCUSE_LIBRARY[cat].label}</button>
+  `).join('');
+
+  filterEl.querySelectorAll('.lib-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterEl.querySelectorAll('.lib-pill').forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-selected', 'false');
+      });
+      pill.classList.add('active');
+      pill.setAttribute('aria-selected', 'true');
+      active = pill.dataset.cat;
+      renderLibrary();
+    });
+  });
+
+  function renderLibrary() {
+    const cat = EXCUSE_LIBRARY[active];
+    gridEl.innerHTML = cat.excuses.map((ex, i) => `
+      <div class="lib-card" style="--i:${i}">
+        <p class="lib-excuse-text">"${ex.text}"</p>
+        <div class="lib-tip-row">
+          <span class="lib-tip-label">Delivery</span>
+          <p class="lib-tip-text">${ex.tip}</p>
+        </div>
+        <button class="excuse-copy-btn" data-text="${ex.text.replace(/"/g, '&quot;')}" aria-label="Copy excuse">Copy</button>
+      </div>
+    `).join('');
+
+    gridEl.querySelectorAll('.excuse-copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.dataset.text;
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = 'Copied \u2713';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+    });
+
+    requestAnimationFrame(() => {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.05 });
+      gridEl.querySelectorAll('.lib-card').forEach(c => obs.observe(c));
+    });
+  }
+
+  renderLibrary();
+})();

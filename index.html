@@ -25,6 +25,7 @@
           <li><a href="#short-game">Short Game</a></li>
           <li><a href="#strategy">Strategy</a></li>
           <li><a href="#practice">Practice</a></li>
+          <li><a href="#excuses">Excuses</a></li>
         </ul>
       </nav>
     </header>
@@ -266,6 +267,77 @@
         </div>
       </div>
     </footer>
+
+      <!-- ── EXCUSES ── -->
+      <section id="excuses">
+        <div class="excuses-header">
+          <div class="shots-header-top">
+            <span class="section-tag">Blame Deflection</span>
+            <span class="section-count" aria-hidden="true">3</span>
+          </div>
+          <h2>Excuses</h2>
+          <div class="section-rule" aria-hidden="true"></div>
+        </div>
+
+        <!-- 01 — Roulette -->
+        <div class="excuses-block">
+          <div class="excuses-block-header">
+            <span class="excuses-block-num">01</span>
+            <div class="excuses-block-text">
+              <h3>Excuse Roulette</h3>
+              <p>Spin for a ready-made excuse. Deny everything.</p>
+            </div>
+          </div>
+          <div class="roulette-card">
+            <div class="roulette-display" id="rouletteDisplay" aria-live="polite">
+              <p class="roulette-placeholder">Hit Spin to generate your excuse.</p>
+            </div>
+            <div class="roulette-actions">
+              <button class="roulette-spin-btn" id="rouletteSpinBtn">Spin</button>
+              <button class="roulette-copy-btn" id="rouletteCopyBtn" hidden aria-label="Copy excuse to clipboard">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 — AI Generator -->
+        <div class="excuses-block">
+          <div class="excuses-block-header">
+            <span class="excuses-block-num">02</span>
+            <div class="excuses-block-text">
+              <h3>AI Excuse Generator</h3>
+              <p>Tell the AI what actually happened. It will handle the rest.</p>
+            </div>
+          </div>
+          <div class="ai-excuse-section">
+            <div class="ai-excuse-form">
+              <textarea
+                class="what-input"
+                id="whatHappenedInput"
+                placeholder="What actually happened? (e.g. three-putted 14, drove OB on 7, took 4 in the bunker on 11...)"
+                rows="3"
+                aria-label="Describe what actually happened"
+              ></textarea>
+              <button class="generate-excuse-btn" id="generateExcuseBtn" disabled>Generate Excuse</button>
+            </div>
+            <div class="ai-excuse-result" id="aiExcuseResult" hidden aria-live="polite"></div>
+          </div>
+        </div>
+
+        <!-- 03 — Library -->
+        <div class="excuses-block">
+          <div class="excuses-block-header">
+            <span class="excuses-block-num">03</span>
+            <div class="excuses-block-text">
+              <h3>Excuse Library</h3>
+              <p>28 pre-loaded excuses across five categories, each with a delivery tip.</p>
+            </div>
+          </div>
+          <div class="library-filter" id="libraryFilter" role="tablist" aria-label="Excuse category"></div>
+          <div class="library-grid" id="libraryGrid" aria-live="polite"></div>
+          <p class="excuses-footer-note">No liability accepted for excuses used in medal rounds.</p>
+        </div>
+
+      </section>
 
     <!-- API Key Modal -->
     <div class="api-modal" id="apiModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="apiModalTitle">

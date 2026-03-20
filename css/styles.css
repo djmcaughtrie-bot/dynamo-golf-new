@@ -15,6 +15,7 @@
   --gold-glow:     rgba(200, 169, 90, 0.35);
 
   --bg:            #0B0812;
+  --bg-alt:        #0F0618;
   --bg-mid:        #120D1A;
   --surface:       rgba(255, 255, 255, 0.035);
   --surface-hover: rgba(255, 255, 255, 0.06);
@@ -25,6 +26,8 @@
   --text-dim:      #9586A8;
   --text-faint:    rgba(237, 232, 244, 0.35);
 }
+
+section.alt-section { background: var(--bg-alt); }
 
 /* ── RESET ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -225,7 +228,8 @@ nav ul a[data-active]::after {
 
 /* ── SHOTS SECTION ── */
 #shots {
-  padding: 9rem 2rem; position: relative;
+  padding: 7rem 2rem; position: relative;
+  border-top: 1px solid var(--border);
 }
 
 #shots > * {
@@ -563,7 +567,7 @@ nav ul a[data-active]::after {
 
 /* ── SHORT GAME SECTION ── */
 #short-game {
-  padding: 9rem 2rem; position: relative;
+  padding: 7rem 2rem; position: relative;
   border-top: 1px solid var(--border);
 }
 
@@ -881,7 +885,7 @@ footer {
    PRACTICE PLANNER SECTION
 ───────────────────────────────────────────────────────────── */
 #practice {
-  padding: 9rem 2rem;
+  padding: 7rem 2rem;
   border-top: 1px solid var(--border);
   position: relative;
 }
@@ -1456,7 +1460,7 @@ footer {
    STRATEGY SECTION
 ───────────────────────────────────────────────────────────── */
 #strategy {
-  padding: 9rem 2rem;
+  padding: 7rem 2rem;
   border-top: 1px solid var(--border);
   position: relative;
 }
@@ -1709,7 +1713,7 @@ footer {
    EXCUSES SECTION
 ───────────────────────────────────────────────────────────── */
 #excuses {
-  padding: 9rem 2rem;
+  padding: 7rem 2rem;
   border-top: 1px solid var(--border);
   position: relative;
 }
@@ -2050,7 +2054,7 @@ footer {
    PUTTING
 ═══════════════════════════════════════════════════════════════ */
 #putting {
-  padding: 9rem 2rem; position: relative; border-top: 1px solid var(--border);
+  padding: 7rem 2rem; position: relative; border-top: 1px solid var(--border);
 }
 #putting > * { max-width: 1200px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
 
@@ -2120,7 +2124,7 @@ footer {
    SWING FAULTS
 ═══════════════════════════════════════════════════════════════ */
 #swing-faults {
-  padding: 9rem 2rem; position: relative; border-top: 1px solid var(--border);
+  padding: 7rem 2rem; position: relative; border-top: 1px solid var(--border);
 }
 #swing-faults > * { max-width: 1200px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
 
@@ -2198,7 +2202,7 @@ footer {
    RULES OF GOLF
 ═══════════════════════════════════════════════════════════════ */
 #rules {
-  padding: 9rem 2rem; position: relative; border-top: 1px solid var(--border);
+  padding: 7rem 2rem; position: relative; border-top: 1px solid var(--border);
 }
 #rules > * { max-width: 1200px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
 
@@ -2277,6 +2281,16 @@ footer {
 /* ══════════════════════════════════════════════
    BUNKER SECTION
 ══════════════════════════════════════════════ */
+#bunker {
+  padding: 7rem 2rem;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+#bunker > * {
+  max-width: 1200px; margin-left: auto; margin-right: auto;
+  position: relative; z-index: 1;
+}
+
 .bunker-section {
   padding: 6rem 2rem 4rem;
   max-width: 1400px;
@@ -2298,6 +2312,16 @@ footer {
 /* ══════════════════════════════════════════════
    PRE-SHOT ROUTINE SECTION
 ══════════════════════════════════════════════ */
+#routine {
+  padding: 7rem 2rem;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+#routine > * {
+  max-width: 1200px; margin-left: auto; margin-right: auto;
+  position: relative; z-index: 1;
+}
+
 .routine-section {
   padding: 6rem 2rem 4rem;
   max-width: 900px;

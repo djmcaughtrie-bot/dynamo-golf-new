@@ -759,29 +759,22 @@ function initDecisionTree() {
 /* ─────────────────────────────────────────────────────────────
    NAV ACTIVE STATE
 ───────────────────────────────────────────────────────────── */
-const navLinks = document.querySelectorAll('nav ul a');
+const navLinks = document.querySelectorAll('nav ul a[href^="#"]');
 const sections = document.querySelectorAll('main section[id]');
 
-new IntersectionObserver(entries => {
+// rootMargin approach: fires when a section's top edge enters the middle
+// viewport band — works for tall sections that never reach a % threshold
+const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    navLinks.forEach(l => l.removeAttribute('data-active'));
-    const link = document.querySelector(`nav ul a[href="#${entry.target.id}"]`);
-    if (link) link.setAttribute('data-active', '');
-  });
-}, { threshold: 0.4 }).observe;
-
-// simple approach that works
-sections.forEach(section => {
-  new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      navLinks.forEach(l => l.removeAttribute('data-active'));
-      const link = document.querySelector(`nav ul a[href="#${section.id}"]`);
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.removeAttribute('data-active'));
+      const link = document.querySelector(`nav ul a[href="#${entry.target.id}"]`);
       if (link) link.setAttribute('data-active', '');
-    });
-  }, { threshold: 0.4 }).observe(section);
-});
+    }
+  });
+}, { rootMargin: '-10% 0px -60% 0px' });
+
+sections.forEach(s => navObserver.observe(s));
 
 /* ─────────────────────────────────────────────────────────────
    HERO PARALLAX

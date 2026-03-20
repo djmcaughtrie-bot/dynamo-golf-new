@@ -862,20 +862,18 @@ body.nav-open { overflow: hidden; }
 /* ── SCROLL TO TOP ── */
 .scroll-top {
   position: fixed; bottom: 2rem; right: 2rem;
-  width: 44px; height: 44px; border-radius: 4px;
-  background: rgba(11, 8, 18, 0.9);
-  border: 1px solid rgba(149, 0, 58, 0.4);
-  color: var(--claret-light); font-size: 1.1rem; cursor: pointer;
-  z-index: 200; opacity: 0; transform: translateY(12px);
-  transition: opacity 0.3s, transform 0.3s, background 0.2s, box-shadow 0.2s;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(11, 8, 18, 0.85);
+  border: 1px solid var(--claret);
+  color: var(--claret); font-size: 1rem; cursor: pointer;
+  z-index: 90; opacity: 0; pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s, background 0.2s, color 0.2s;
   display: flex; align-items: center; justify-content: center;
   backdrop-filter: blur(12px);
 }
-.scroll-top.visible { opacity: 1; transform: translateY(0); }
-.scroll-top:hover {
-  background: rgba(149, 0, 58, 0.15); border-color: var(--claret);
-  box-shadow: 0 0 20px var(--claret-glow);
-}
+.scroll-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.scroll-top:hover { background: var(--claret); color: #fff; border-color: var(--claret); }
 
 /* ── FOOTER ── */
 footer {

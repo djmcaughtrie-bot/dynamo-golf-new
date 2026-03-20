@@ -272,17 +272,27 @@ nav ul a[data-active]::after {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700;
   letter-spacing: -0.02em; line-height: 1.05; color: var(--text);
+  display: flex; align-items: center;
+}
+
+.shots-header h2::before,
+.sg-header h2::before,
+.strategy-header h2::before,
+.practice-header h2::before,
+.excuses-header h2::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 56px;
+  background: var(--claret);
+  margin-right: 0.85rem;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .sg-intro {
   margin-top: 0.75rem; color: var(--text-dim);
   font-size: 1rem; max-width: 540px;
-}
-
-.section-rule {
-  position: absolute; right: 0; top: 55%; transform: translateY(-50%);
-  width: 28%; height: 1px;
-  background: linear-gradient(90deg, rgba(149, 0, 58, 0.4), transparent);
 }
 
 /* ── CATEGORY FILTER ── */
@@ -853,10 +863,6 @@ footer {
 @media (max-width: 1024px) {
   .shots-grid { grid-template-columns: repeat(2, 1fr); }
   .releases-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 860px) {
-  .section-rule { display: none; }
 }
 
 @media (max-width: 700px) {

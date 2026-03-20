@@ -107,6 +107,61 @@ nav ul a[data-active]::after {
   outline-offset: 2px;
 }
 
+#navToggle { display: none; }
+
+#navOverlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(11, 8, 18, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: center;
+}
+
+#navOverlay.open { display: flex; }
+
+#navOverlay ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 0;
+}
+
+#navOverlay ul a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+#navOverlay ul a:hover { color: var(--text); }
+
+@media (max-width: 768px) {
+  nav ul { display: none; }
+
+  #navToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: none; border: none;
+    color: var(--claret);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+  }
+}
+
+body.nav-open { overflow: hidden; }
+
 /* ── HERO ── */
 #hero {
   min-height: 96vh;

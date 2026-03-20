@@ -168,7 +168,7 @@ body.nav-open { overflow: hidden; }
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
   background:
-    radial-gradient(ellipse 70% 80% at 5% 35%, rgba(92, 0, 37, 0.7) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 80% at 5% 35%, rgba(92, 0, 37, 0.85) 0%, transparent 60%),
     radial-gradient(ellipse 50% 60% at 92% 60%, rgba(26, 75, 140, 0.4) 0%, transparent 55%),
     radial-gradient(ellipse 100% 50% at 50% 110%, rgba(92, 0, 37, 0.5) 0%, transparent 65%),
     var(--bg);
@@ -193,7 +193,7 @@ body.nav-open { overflow: hidden; }
   position: absolute; right: -0.06em; top: 50%; transform: translateY(-50%);
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(9rem, 22vw, 24rem); font-weight: 900; font-style: italic;
-  color: transparent; -webkit-text-stroke: 1px rgba(149, 0, 58, 0.08);
+  color: transparent; -webkit-text-stroke: 1px rgba(149, 0, 58, 0.13);
   user-select: none; pointer-events: none; line-height: 1; will-change: transform;
 }
 
@@ -319,7 +319,7 @@ body.nav-open { overflow: hidden; }
 
 .section-tag {
   font-family: 'DM Mono', monospace;
-  font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase; color: var(--claret-light);
+  font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--claret-light);
 }
 
 .section-count {
@@ -561,7 +561,7 @@ body.nav-open { overflow: hidden; }
 }
 .thought-label {
   font-family: 'DM Mono', monospace;
-  font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase;
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
   color: var(--claret-light); display: block; margin-bottom: 0.4rem;
 }
 .panel-thought blockquote {
@@ -573,7 +573,7 @@ body.nav-open { overflow: hidden; }
 
 .panel-section-title {
   font-family: 'DM Mono', monospace;
-  font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase;
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
   color: var(--text-faint); margin-bottom: 0.75rem;
 }
 
@@ -625,15 +625,15 @@ body.nav-open { overflow: hidden; }
 }
 
 .panel-watchout {
-  background: rgba(149, 0, 58, 0.06);
-  border: 1px solid rgba(149, 0, 58, 0.18);
+  background: rgba(200, 169, 90, 0.06);
+  border: 1px solid rgba(200, 169, 90, 0.2);
   border-radius: 4px; padding: 1rem 1.25rem;
 }
 
 .watchout-label {
   font-family: 'DM Mono', monospace;
-  font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--claret-light); display: block; margin-bottom: 0.4rem;
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); display: block; margin-bottom: 0.4rem;
 }
 .panel-watchout p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
 
@@ -739,7 +739,7 @@ body.nav-open { overflow: hidden; }
 
 .dt-result-label {
   font-family: 'DM Mono', monospace;
-  font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase;
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
   color: var(--text-faint); display: block; margin-bottom: 0.4rem;
 }
 
@@ -817,7 +817,7 @@ body.nav-open { overflow: hidden; }
 }
 .rc-when-label {
   font-family: 'DM Mono', monospace;
-  font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase;
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
   color: var(--text-faint); display: block; margin-bottom: 0.4rem;
 }
 .rc-when p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; }

@@ -777,6 +777,42 @@ const navObserver = new IntersectionObserver((entries) => {
 sections.forEach(s => navObserver.observe(s));
 
 /* ─────────────────────────────────────────────────────────────
+   MOBILE NAV TOGGLE
+───────────────────────────────────────────────────────────── */
+const navToggle = document.getElementById('navToggle');
+const navOverlay = document.getElementById('navOverlay');
+
+function openNav() {
+  navOverlay.classList.add('open');
+  navOverlay.setAttribute('aria-hidden', 'false');
+  navToggle.setAttribute('aria-expanded', 'true');
+  navToggle.textContent = '✕';
+  document.body.classList.add('nav-open');
+}
+
+function closeNav() {
+  navOverlay.classList.remove('open');
+  navOverlay.setAttribute('aria-hidden', 'true');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.textContent = '☰';
+  document.body.classList.remove('nav-open');
+}
+
+if (navToggle && navOverlay) {
+  navToggle.addEventListener('click', () => {
+    navToggle.getAttribute('aria-expanded') === 'true' ? closeNav() : openNav();
+  });
+
+  // Close when a link is tapped
+  navOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  // Close when clicking outside the link list
+  navOverlay.addEventListener('click', e => {
+    if (e.target === navOverlay) closeNav();
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
    HERO PARALLAX
 ───────────────────────────────────────────────────────────── */
 const heroBgText = document.querySelector('.hero-bg-text');

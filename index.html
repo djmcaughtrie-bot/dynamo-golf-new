@@ -19,8 +19,8 @@
           <span class="brand-icon" aria-hidden="true">⛳</span>
           <h1>Golf <span>App</span></h1>
         </div>
-        <ul>
-          <li><a href="#">Home</a></li>
+        <ul aria-label="Main navigation">
+          <li><a href="#hero">Home</a></li>
           <li><a href="#shots">Shots</a></li>
           <li><a href="#short-game">Short Game</a></li>
           <li><a href="#putting">Putting</a></li>
@@ -33,9 +33,9 @@
           <li><a href="#excuses">Excuses</a></li>
         </ul>
         <button id="navToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-        <div id="navOverlay" aria-hidden="true">
-          <ul>
-            <li><a href="#">Home</a></li>
+        <div id="navOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navigation menu">
+          <ul aria-label="Mobile navigation">
+            <li><a href="#hero">Home</a></li>
             <li><a href="#shots">Shots</a></li>
             <li><a href="#short-game">Short Game</a></li>
             <li><a href="#putting">Putting</a></li>

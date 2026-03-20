@@ -2414,3 +2414,625 @@ renderPutting();
 renderRules();
 renderFaultFilter();
 renderFaults('all');
+
+/* ═══════════════════════════════════════════════════════════════
+   BUNKER SHOTS
+═══════════════════════════════════════════════════════════════ */
+const BUNKER_SHOTS = [
+  {
+    id: 'b-standard', name: 'Standard Splash', cat: 'greenside', diff: 2,
+    summary: 'The foundation shot — ball rides out on displaced sand',
+    setup: {
+      ballPosition: 'Just forward of centre',
+      stance: 'Wide and open — feet 20–25° left of target, dug into sand',
+      weight: '60% on lead side throughout',
+      grip: 'Open the face before gripping — then normal pressure'
+    },
+    clubface: 'Open before gripping — aims right of target at address',
+    swingPath: 'Along the foot line, entering the sand 2 inches behind the ball',
+    swingThought: 'Hit the sand 2 inches behind — finish high',
+    tempo: 'Nearly full swing — most amateurs significantly under-commit',
+    range: [
+      'Draw a line 2 inches behind the ball and practise entering the sand on that exact spot',
+      'Finish with the club high — if it stops in the sand, more swing is needed',
+      'Open the face more than feels comfortable — it closes through impact'
+    ],
+    course: [
+      'Finish high — quitting through buries the club and leaves the ball in the sand',
+      'The ball is not struck directly — it rides out on the cushion of displaced sand',
+      'From firm or wet sand, close the face slightly and enter 1 inch behind instead of 2'
+    ],
+    watchOut: 'Quitting through the shot — the club buries and the ball goes nowhere'
+  },
+  {
+    id: 'b-plugged', name: 'Plugged Lie (Fried Egg)', cat: 'greenside', diff: 3,
+    summary: 'Opposite of everything else in the bunker — close the face and chop',
+    setup: {
+      ballPosition: 'Centre or slightly back',
+      stance: 'Square or slightly closed — not open',
+      weight: '65% lead side',
+      grip: 'Face square or slightly closed — do NOT open it'
+    },
+    clubface: 'Square to slightly closed — the face must dig, not bounce',
+    swingPath: 'Steep V-shape downswing — chop behind the ball with minimal follow-through',
+    swingThought: 'Steep chop — let the sand do the work',
+    tempo: 'Aggressive and steep — the club must force through compacted sand',
+    range: [
+      'Practise with the face square first — the instinct to open it is strong and wrong here',
+      'Aim for a steeper V-shape than normal — visualise an axe chop, not a sweep',
+      'Expect the ball to come out lower with significantly more run than a splash shot'
+    ],
+    course: [
+      'Aim much further from the hole — the ball will run hard with no backspin',
+      'Getting out in one shot is the only goal — par is a bonus, bogey is fine',
+      'Using the open-face splash technique on a plugged ball makes the lie worse, not better'
+    ],
+    watchOut: 'Opening the face — the one bunker situation where an open face buries the club deeper'
+  },
+  {
+    id: 'b-long', name: 'Long Bunker Shot (20–30m)', cat: 'greenside', diff: 3,
+    summary: 'The standard splash extended — bigger swing, same entry point',
+    setup: {
+      ballPosition: 'Just forward of centre — same as standard',
+      stance: 'Wide and open — same as standard splash',
+      weight: '60% lead side',
+      grip: 'Open face before gripping'
+    },
+    clubface: 'Open — slightly less open than standard to generate extra distance',
+    swingPath: 'Along the foot line — enter the sand 2 inches behind the ball',
+    swingThought: 'Same shot, bigger motion — do not switch to ball-first',
+    tempo: 'Full and committed — distance from swing size, not harder contact',
+    range: [
+      'Practise at 10m, 20m, and 30m with the same entry point — only swing length changes',
+      'Switch to a gap wedge (52°) instead of a lob wedge for shots over 20 metres',
+      'Keep the entry point consistent — always 2 inches behind, regardless of distance needed'
+    ],
+    course: [
+      'Gap wedge or sand wedge gives more distance than lob wedge from the same swing size',
+      'The most common mis-hit is a thin — stay committed to entering the sand first',
+      'Aim at the centre of the green — trajectory and spin control are reduced at this distance'
+    ],
+    watchOut: 'Switching to ball-first contact for extra distance — always enter the sand first on every greenside bunker shot'
+  },
+  {
+    id: 'b-uphill', name: 'Uphill Lie in Bunker', cat: 'greenside', diff: 3,
+    summary: 'Slope adds loft — tilt spine, shorten swing, expect a higher shot',
+    setup: {
+      ballPosition: 'Forward, toward the high side',
+      stance: 'Wide and open — spine tilted to match the upslope',
+      weight: 'Trail foot for balance — the slope dictates this',
+      grip: 'Open face before gripping — but slightly less open than standard'
+    },
+    clubface: 'Open — but slope already adds loft, so less open than the standard splash',
+    swingPath: 'Follow the slope upward on the follow-through — do not fight the incline',
+    swingThought: 'Swing up the slope — let the hill provide the loft',
+    tempo: 'Controlled — balance on the slope is the priority over power',
+    range: [
+      'Tilt the spine into the slope before addressing the ball — not doing this causes every mis-hit',
+      'Take a shorter, more controlled swing to maintain balance all the way through impact',
+      'The ball will come out higher and shorter than normal — factor this in when choosing where to aim'
+    ],
+    course: [
+      'Expect a higher, shorter shot — aim at the centre of the green and accept a long putt',
+      'Sand wedge over lob wedge — the slope provides enough loft and the sand wedge has more mass',
+      'Take an extra club if the green is far — the high flight loses distance'
+    ],
+    watchOut: 'Not tilting the spine into the slope — fighting the hill produces a heavy, thinned, or sideways shot'
+  },
+  {
+    id: 'b-downhill', name: 'Downhill Lie in Bunker', cat: 'greenside', diff: 3,
+    summary: 'The hardest bunker lie — slope removes loft, forces a steep chop',
+    setup: {
+      ballPosition: 'Back, toward the low side',
+      stance: 'Wide — spine tilted into the downslope',
+      weight: 'Lead side — follow the slope forward',
+      grip: 'Open face before gripping — but less open than standard'
+    },
+    clubface: 'Open — but less open than standard to compensate for the loft removed by the slope',
+    swingPath: 'Steep V-shape — chop steeply behind the ball and chase it down the slope',
+    swingThought: 'Steep entry — chase the ball down the hill',
+    tempo: 'Aggressive and steep — do not try to follow through high',
+    range: [
+      'Practise the spine tilt into the downslope — it feels extreme but is essential',
+      'This shot cannot produce height — accept a low runner and plan accordingly before the swing',
+      'Sand wedge over lob wedge — the downslope already removes loft'
+    ],
+    course: [
+      'This shot will come out low and run — aim well short of a tight or back pin',
+      'Getting out of the bunker is the only goal — aim for the widest part of the green',
+      'Do not attempt to hit it high from a downhill lie — it is not possible from this position'
+    ],
+    watchOut: 'Trying to help the ball up — the slope makes a high shot physically impossible; accept the low runner'
+  },
+  {
+    id: 'b-wet', name: 'Wet or Compact Sand', cat: 'greenside', diff: 2,
+    summary: 'Firm sand changes the physics — less bounce, closer entry, same commitment',
+    setup: {
+      ballPosition: 'Centre — not as far forward as the standard splash',
+      stance: 'Slightly less open than standard',
+      weight: '60% lead side',
+      grip: 'Square to slightly open face — wet sand reduces the need for bounce'
+    },
+    clubface: 'Square to slightly open — firm sand means less bounce activation is better',
+    swingPath: 'Enter the sand 1 inch behind the ball — closer than the standard 2 inches',
+    swingThought: '1 inch behind — same commitment, closer entry point',
+    tempo: 'Full and committed — wet sand resists the club more than dry',
+    range: [
+      'Wet sand requires entering 1 inch behind the ball, not 2 — practise adjusting this',
+      'A pitching wedge or 9-iron from firm wet sand is often more reliable than a lob wedge',
+      'Practise on wet days deliberately — feel for how the club reacts differently in firm sand'
+    ],
+    course: [
+      'Wet/firm sand means the club does not penetrate easily — commit to a full swing',
+      'A pitching wedge from firm wet sand sometimes produces better results than a lob wedge',
+      'If the sand is more like hardpan, consider playing a chip-style shot with a pitching wedge'
+    ],
+    watchOut: 'Using the standard 2-inch entry in firm sand — the bounce skips off the surface and produces a thin shot'
+  },
+  {
+    id: 'b-fairway-mid', name: 'Fairway Bunker — Iron', cat: 'fairway', diff: 2,
+    summary: 'Pick the ball clean — no sand before the ball, opposite to greenside',
+    setup: {
+      ballPosition: 'One ball back from normal — promotes ball-first contact',
+      stance: 'Narrower than normal, feet dug in for stability but not deeply',
+      weight: '55% lead side — level throughout, no lateral sway',
+      grip: 'Choke down one inch — reduces the risk of hitting the sand first'
+    },
+    clubface: 'Square — no face manipulation; this is a normal iron shot executed from sand',
+    swingPath: 'Shallow and sweeping — pick the ball cleanly off the surface',
+    swingThought: 'Pick it clean — ball first, no sand',
+    tempo: 'Controlled at 80% — firm base, no lateral movement whatsoever',
+    range: [
+      'Practise picking the ball clean from tight lies on the range — same contact required',
+      'Choke down and take more club than feels right — restricted swing reduces distance',
+      'The feet dug into sand effectively shortens the club — factor this into club selection'
+    ],
+    course: [
+      'Check the lip height before selecting any club — clearing the lip is the absolute priority',
+      'Take one to two clubs extra — the restricted swing and grip-down reduce distance noticeably',
+      'If the lie is poor, take a sand wedge, splash out, and play from the fairway next shot'
+    ],
+    watchOut: 'Hitting the sand before the ball — this must be ball-first contact, the complete opposite of the greenside splash'
+  },
+  {
+    id: 'b-fairway-long', name: 'Fairway Bunker — Wood / Hybrid', cat: 'fairway', diff: 3,
+    summary: 'Advanced — only available with a low lip, good lie, and enough distance',
+    setup: {
+      ballPosition: 'Standard to one ball back — depends on the club used',
+      stance: 'Narrower than standard, feet dug in for stability',
+      weight: 'Very centred — no weight shift, rotate in place around a fixed spine',
+      grip: 'Choke down significantly on woods and hybrids'
+    },
+    clubface: 'Square — this is a technique and discipline shot, not a face-manipulation shot',
+    swingPath: 'Shallow, compact, sweeping — pick the ball cleanly with minimal lower body movement',
+    swingThought: 'Quiet legs — turn in place, pick it clean',
+    tempo: 'Controlled at 75% — speed from rotation, not from any lateral movement',
+    range: [
+      'This shot requires a good lie, a low lip, and enough distance to justify the risk — assess all three',
+      'Practise the quiet lower body — no sway, no slide, pure rotation around a fixed centre',
+      'Favour a 5-wood or hybrid over a 3-wood — the extra loft provides more margin for error'
+    ],
+    course: [
+      'The lip height is the first and only check — if there is any doubt about clearing it, do not attempt this shot',
+      'Choke down significantly on fairway woods — the restricted stance effectively shortens the club',
+      'Accept a 15–20% distance loss and plan from where the ball will realistically land'
+    ],
+    watchOut: 'Overestimating the lip — attempting a long fairway bunker shot over a high lip is how high numbers happen'
+  }
+];
+
+/* ── Extend openPanel to cover bunker shots ── */
+const _originalOpenPanel = openPanel;
+function openPanel(id) {
+  const shot = SHOTS.find(s => s.id === id) || BUNKER_SHOTS.find(s => s.id === id);
+  if (!shot) return;
+
+  const panel   = document.getElementById('shotPanel');
+  const inner   = document.getElementById('panelInner');
+  const overlay = document.getElementById('panelOverlay');
+
+  const catLabel = shot.cat === 'greenside' ? 'Greenside' : shot.cat === 'fairway' ? 'Fairway' : (CAT_LABELS[shot.cat] || shot.cat);
+  const badgeColour = { shape:'', control:'control', shortgame:'shortgame', specialty:'specialty', greenside:'bunker-gs', fairway:'bunker-fw' }[shot.cat] || '';
+
+  inner.innerHTML = `
+    <div class="panel-scroll">
+      <button class="panel-close" id="panelClose" aria-label="Close">&#x2715;</button>
+      <div class="panel-head">
+        <span class="panel-badge ${badgeColour}">${catLabel}</span>
+        <div class="panel-diff" aria-label="Difficulty: ${shot.diff} of 3">
+          ${[1,2,3].map(n => `<span class="dot ${n <= shot.diff ? 'filled' : ''}"></span>`).join('')}
+        </div>
+      </div>
+      <h2 class="panel-title">${shot.name}</h2>
+      <p class="panel-summary">${shot.summary}</p>
+      <div class="panel-thought">
+        <span class="thought-label">Swing thought</span>
+        <blockquote>"${shot.swingThought}"</blockquote>
+      </div>
+      <div class="panel-section">
+        <h4 class="panel-section-title">Setup</h4>
+        <div class="setup-grid">
+          <div class="setup-item"><span class="setup-label">Ball position</span><span>${shot.setup.ballPosition}</span></div>
+          <div class="setup-item"><span class="setup-label">Stance</span><span>${shot.setup.stance}</span></div>
+          <div class="setup-item"><span class="setup-label">Weight</span><span>${shot.setup.weight}</span></div>
+          <div class="setup-item"><span class="setup-label">Grip</span><span>${shot.setup.grip}</span></div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <h4 class="panel-section-title">Technique</h4>
+        <div class="tech-grid">
+          <div class="tech-item"><span class="tech-label">Club face</span><span>${shot.clubface}</span></div>
+          <div class="tech-item"><span class="tech-label">Swing path</span><span>${shot.swingPath}</span></div>
+          <div class="tech-item"><span class="tech-label">Tempo</span><span>${shot.tempo}</span></div>
+        </div>
+      </div>
+      <div class="panel-mode-toggle" role="tablist">
+        <button class="mode-btn active" data-mode="range" role="tab" aria-selected="true">Range</button>
+        <button class="mode-btn" data-mode="course" role="tab" aria-selected="false">On the Course</button>
+      </div>
+      <div class="panel-keys" id="panelKeys">
+        ${shot.range.map(k => `<div class="key-point"><span class="key-dot" aria-hidden="true"></span><span>${k}</span></div>`).join('')}
+      </div>
+      <div class="panel-watchout">
+        <span class="watchout-label">Watch out</span>
+        <p>${shot.watchOut}</p>
+      </div>
+    </div>
+  `;
+
+  panel.removeAttribute('aria-hidden');
+  overlay.classList.add('active');
+  document.body.classList.add('panel-open');
+
+  const keysEl = inner.querySelector('#panelKeys');
+  inner.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      inner.querySelectorAll('.mode-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+      const points = btn.dataset.mode === 'range' ? shot.range : shot.course;
+      keysEl.innerHTML = points.map(k => `<div class="key-point"><span class="key-dot" aria-hidden="true"></span><span>${k}</span></div>`).join('');
+    });
+  });
+
+  inner.querySelector('#panelClose').addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel, { once: true });
+  inner.querySelector('#panelClose').focus();
+}
+
+function renderBunkerShots(cat) {
+  const grid = document.getElementById('bunkerGrid');
+  if (!grid) return;
+  const shots = cat === 'all' ? BUNKER_SHOTS : BUNKER_SHOTS.filter(s => s.cat === cat);
+
+  grid.innerHTML = shots.map((shot, i) => `
+    <article class="shot-card" data-id="${shot.id}" data-cat="${shot.cat}"
+      style="--i:${i}" role="button" tabindex="0" aria-label="View ${shot.name} details">
+      <div class="sc-top">
+        <span class="sc-badge ${shot.cat === 'greenside' ? 'bunker-gs' : 'bunker-fw'}">
+          ${shot.cat === 'greenside' ? 'Greenside' : 'Fairway'}
+        </span>
+        <div class="sc-diff" aria-label="Difficulty: ${shot.diff} of 3">
+          ${[1,2,3].map(n => `<span class="dot ${n <= shot.diff ? 'filled' : ''}"></span>`).join('')}
+        </div>
+      </div>
+      <h3 class="sc-name">${shot.name}</h3>
+      <p class="sc-thought">"${shot.swingThought}"</p>
+      <p class="sc-summary">${shot.summary}</p>
+      <span class="sc-arrow" aria-hidden="true">→</span>
+    </article>
+  `).join('');
+
+  grid.querySelectorAll('.shot-card').forEach(card => {
+    const open = () => openPanel(card.dataset.id);
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+
+  requestAnimationFrame(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    grid.querySelectorAll('.shot-card').forEach(c => obs.observe(c));
+  });
+}
+
+function initBunkerFilter() {
+  const filter = document.getElementById('bunkerFilter');
+  if (!filter) return;
+  filter.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filter.querySelectorAll('.cat-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+      renderBunkerShots(btn.dataset.bcat);
+    });
+  });
+}
+
+renderBunkerShots('all');
+initBunkerFilter();
+
+/* ═══════════════════════════════════════════════════════════════
+   PRE-SHOT ROUTINE
+═══════════════════════════════════════════════════════════════ */
+(function initRoutine() {
+  const STORAGE_KEY = 'golf_app_routines';
+
+  const DEFAULTS = {
+    'full-shot': {
+      id: 'full-shot', name: 'Full Shot',
+      steps: [
+        { id: 'fs1', label: 'Read the shot', note: 'Stand behind the ball. Target, distance, wind, lie. Make the club decision before you approach.' },
+        { id: 'fs2', label: 'Pick an intermediate target', note: 'Find a spot 1–2 feet ahead of the ball on the target line. Align the face to this, not the flag.' },
+        { id: 'fs3', label: 'Take your stance', note: 'Feet parallel to target line. Ball position set. Confirm alignment is correct before doing anything else.' },
+        { id: 'fs4', label: 'Grip and posture check', note: 'Confirm grip pressure (4 out of 10). Knee flex, hip hinge, spine angle. No tension in the forearms.' },
+        { id: 'fs5', label: 'Two looks at the target', note: 'Look at the target. Look back at the ball. Look at the target again. Final check — nothing changes after this.' },
+        { id: 'fs6', label: 'Set your one swing thought', note: 'One thought only — selected during step 1. No new thoughts from this point forward.' },
+        { id: 'fs7', label: 'Commit and swing', note: 'The decision is made. Full commitment. There is no partial swing from here.' }
+      ]
+    },
+    'short-game': {
+      id: 'short-game', name: 'Short Game',
+      steps: [
+        { id: 'sg1', label: 'Assess the lie', note: 'Clean? Tight? Rough? Buried? The lie determines which Release technique is available to you.' },
+        { id: 'sg2', label: 'Decide your Release', note: 'Release 1 (run), Release 2 (pitch), or Release 3 (lob / bunker)? Commit to one before approaching the ball.' },
+        { id: 'sg3', label: 'Pick a landing spot', note: 'Not the hole — a specific spot on the green where the ball will land. The shot ends there.' },
+        { id: 'sg4', label: 'Take practice swings', note: '1–2 swings matching the intended Release. Check you are brushing the ground in the right place.' },
+        { id: 'sg5', label: 'Set up and align', note: 'Face aimed at the landing spot. Body aligned accordingly. Weight preset for the chosen Release type.' },
+        { id: 'sg6', label: 'Commit and execute', note: 'Full commitment to the chosen shot and Release technique. No changes mid-swing.' }
+      ]
+    },
+    'putting': {
+      id: 'putting', name: 'Putting',
+      steps: [
+        { id: 'p1', label: 'Read the putt', note: 'From behind the ball, 10–15 feet back. Identify the overall slope and the break in the last 3 feet.' },
+        { id: 'p2', label: 'Walk the line', note: 'Walk alongside the putt to feel the slope under your feet. Essential on any putt over 20 feet.' },
+        { id: 'p3', label: 'Pick your entry point', note: 'Identify the exact spot on the hole edge where you want the ball to arrive. Not the centre on a breaking putt.' },
+        { id: 'p4', label: 'Set up to the entry point', note: 'Align the face to the entry point. Body parallel to the intended start line.' },
+        { id: 'p5', label: 'Rehearsal stroke for pace', note: '1–2 practice strokes focusing on the pace required. Not the direction — the pace.' },
+        { id: 'p6', label: 'One look at the hole', note: 'Final look at the entry point. Return eyes to the ball. No second look.' },
+        { id: 'p7', label: 'Stroke', note: 'Committed to the pace and entry point selected. The decision is made.' }
+      ]
+    }
+  };
+
+  /* State */
+  let routines    = loadRoutines();
+  let activeId    = 'full-shot';
+  let mode        = 'view';     /* view | run | edit */
+  let currentStep = 0;
+  let completed   = new Set();
+
+  function loadRoutines() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULTS));
+    } catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
+  }
+
+  function saveRoutines() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(routines)); } catch {}
+  }
+
+  function uid() { return 'step_' + Math.random().toString(36).slice(2, 8); }
+
+  /* ── RENDER SHELL ── */
+  function render() {
+    const container = document.getElementById('routineSection');
+    if (!container) return;
+
+    const routine = routines[activeId];
+
+    container.innerHTML = `
+      <!-- Routine selector tabs -->
+      <div class="routine-tabs" role="tablist" aria-label="Select routine">
+        ${Object.values(routines).map(r => `
+          <button class="routine-tab ${r.id === activeId ? 'active' : ''}"
+            data-rid="${r.id}" role="tab" aria-selected="${r.id === activeId}">${r.name}</button>
+        `).join('')}
+      </div>
+
+      <!-- Mode bar -->
+      <div class="routine-modebar">
+        <div class="routine-mode-btns">
+          <button class="routine-mode-btn ${mode === 'view' ? 'active' : ''}" data-mode="view">Overview</button>
+          <button class="routine-mode-btn ${mode === 'run'  ? 'active' : ''}" data-mode="run">Run</button>
+          <button class="routine-mode-btn ${mode === 'edit' ? 'active' : ''}" data-mode="edit">Edit</button>
+        </div>
+        <span class="routine-step-count">${routine.steps.length} steps</span>
+      </div>
+
+      <!-- Content -->
+      <div class="routine-content" id="routineContent">
+        ${mode === 'view' ? renderOverview(routine)
+        : mode === 'run'  ? renderRun(routine)
+        :                   renderEdit(routine)}
+      </div>
+    `;
+
+    /* Tab clicks */
+    container.querySelectorAll('.routine-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeId = btn.dataset.rid;
+        mode = 'view'; currentStep = 0; completed = new Set();
+        render();
+      });
+    });
+
+    /* Mode clicks */
+    container.querySelectorAll('.routine-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        mode = btn.dataset.mode;
+        currentStep = 0; completed = new Set();
+        render();
+      });
+    });
+
+    /* Mode-specific listeners */
+    if (mode === 'run')  bindRunListeners(routine);
+    if (mode === 'edit') bindEditListeners(routine);
+  }
+
+  /* ── OVERVIEW MODE ── */
+  function renderOverview(routine) {
+    return `
+      <div class="routine-overview">
+        ${routine.steps.map((step, i) => `
+          <div class="routine-step-item">
+            <span class="rsi-num">${String(i + 1).padStart(2, '0')}</span>
+            <div class="rsi-body">
+              <h4 class="rsi-label">${step.label}</h4>
+              <p class="rsi-note">${step.note}</p>
+            </div>
+          </div>
+        `).join('')}
+        <button class="routine-start-btn" data-mode="run">Run this routine →</button>
+      </div>
+    `;
+  }
+
+  /* ── RUN MODE ── */
+  function renderRun(routine) {
+    const total = routine.steps.length;
+    const allDone = completed.size === total;
+
+    if (allDone) {
+      return `
+        <div class="routine-complete">
+          <div class="routine-complete-icon" aria-hidden="true">✓</div>
+          <h3>Routine complete</h3>
+          <p>Every step done. Step up and commit.</p>
+          <button class="routine-reset-btn" id="routineReset">Start again</button>
+        </div>
+      `;
+    }
+
+    const step = routine.steps[currentStep];
+    return `
+      <div class="routine-run">
+        <!-- Progress dots -->
+        <div class="run-progress" aria-label="Step ${currentStep + 1} of ${total}">
+          ${routine.steps.map((_, i) => `
+            <button class="run-dot ${i === currentStep ? 'current' : ''} ${completed.has(i) ? 'done' : ''}"
+              data-step="${i}" aria-label="Go to step ${i + 1}"></button>
+          `).join('')}
+        </div>
+        <!-- Step display -->
+        <div class="run-step-display">
+          <div class="run-step-meta">
+            <span class="run-step-num">${String(currentStep + 1).padStart(2, '0')}</span>
+            <span class="run-step-total">/ ${String(total).padStart(2, '0')}</span>
+          </div>
+          <h3 class="run-step-label">${step.label}</h3>
+          <p class="run-step-note">${step.note}</p>
+        </div>
+        <!-- Actions -->
+        <div class="run-actions">
+          ${currentStep > 0 ? `<button class="run-prev" id="runPrev">← Back</button>` : '<span></span>'}
+          <button class="run-check" id="runCheck">
+            ${currentStep === total - 1 ? 'Complete ✓' : 'Done →'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  /* ── EDIT MODE ── */
+  function renderEdit(routine) {
+    return `
+      <div class="routine-edit">
+        <div class="edit-steps" id="editSteps">
+          ${routine.steps.map((step, i) => `
+            <div class="edit-step" data-step-id="${step.id}">
+              <span class="edit-step-num">${String(i + 1).padStart(2, '0')}</span>
+              <div class="edit-step-fields">
+                <input class="edit-step-label" type="text" value="${step.label}" data-field="label" data-id="${step.id}" placeholder="Step name">
+                <textarea class="edit-step-note" data-field="note" data-id="${step.id}" rows="2" placeholder="Cue or instruction">${step.note}</textarea>
+              </div>
+              <button class="edit-step-delete" data-id="${step.id}" aria-label="Remove step">✕</button>
+            </div>
+          `).join('')}
+        </div>
+        <div class="edit-actions">
+          <button class="edit-add-btn" id="editAdd">+ Add step</button>
+          <button class="edit-reset-btn" id="editReset">Reset to defaults</button>
+        </div>
+      </div>
+    `;
+  }
+
+  /* ── RUN LISTENERS ── */
+  function bindRunListeners(routine) {
+    const content = document.getElementById('routineContent');
+    if (!content) return;
+
+    const checkBtn = content.querySelector('#runCheck');
+    const prevBtn  = content.querySelector('#runPrev');
+    const resetBtn = content.querySelector('#routineReset');
+
+    if (checkBtn) {
+      checkBtn.addEventListener('click', () => {
+        completed.add(currentStep);
+        if (currentStep < routine.steps.length - 1) { currentStep++; }
+        render();
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) { currentStep--; completed.delete(currentStep); render(); }
+      });
+    }
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => { currentStep = 0; completed = new Set(); render(); });
+    }
+
+    content.querySelectorAll('.run-dot').forEach(dot => {
+      dot.addEventListener('click', () => { currentStep = parseInt(dot.dataset.step); render(); });
+    });
+
+    /* Start button in overview */
+    const startBtn = content.querySelector('.routine-start-btn');
+    if (startBtn) { startBtn.addEventListener('click', () => { mode = 'run'; render(); }); }
+  }
+
+  /* ── EDIT LISTENERS ── */
+  function bindEditListeners(routine) {
+    const content = document.getElementById('routineContent');
+    if (!content) return;
+
+    /* Inline field changes */
+    content.querySelectorAll('[data-field]').forEach(input => {
+      input.addEventListener('input', () => {
+        const step = routines[activeId].steps.find(s => s.id === input.dataset.id);
+        if (step) { step[input.dataset.field] = input.value; saveRoutines(); }
+      });
+    });
+
+    /* Delete */
+    content.querySelectorAll('.edit-step-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        routines[activeId].steps = routines[activeId].steps.filter(s => s.id !== btn.dataset.id);
+        saveRoutines(); render();
+      });
+    });
+
+    /* Add step */
+    const addBtn = content.querySelector('#editAdd');
+    if (addBtn) {
+      addBtn.addEventListener('click', () => {
+        routines[activeId].steps.push({ id: uid(), label: 'New step', note: 'Add your cue here.' });
+        saveRoutines(); render();
+      });
+    }
+
+    /* Reset */
+    const resetBtn = content.querySelector('#editReset');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        routines[activeId] = JSON.parse(JSON.stringify(DEFAULTS[activeId]));
+        saveRoutines(); render();
+      });
+    }
+  }
+
+  render();
+})();

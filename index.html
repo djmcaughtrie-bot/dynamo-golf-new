@@ -24,9 +24,11 @@
           <li><a href="#shots">Shots</a></li>
           <li><a href="#short-game">Short Game</a></li>
           <li><a href="#putting">Putting</a></li>
+          <li><a href="#bunker">Bunker</a></li>
           <li><a href="#swing-faults">Swing Faults</a></li>
           <li><a href="#strategy">Strategy</a></li>
           <li><a href="#rules">Rules</a></li>
+          <li><a href="#routine">Routine</a></li>
           <li><a href="#practice">Practice</a></li>
           <li><a href="#excuses">Excuses</a></li>
         </ul>
@@ -130,6 +132,25 @@
         <div class="putting-grid" id="puttingGrid"></div>
       </section>
 
+      <!-- ── BUNKER ── -->
+      <section id="bunker">
+        <div class="shots-header">
+          <div class="shots-header-top">
+            <span class="section-tag">Sand Play</span>
+            <span class="section-count" aria-hidden="true">8</span>
+          </div>
+          <h2>Bunker Shots</h2>
+          <p class="sg-intro">Every bunker situation — from the standard splash to the plugged fried egg and the long fairway shot — with the exact technique for each.</p>
+          <div class="section-rule" aria-hidden="true"></div>
+        </div>
+        <div class="cat-filter" id="bunkerFilter" role="tablist" aria-label="Filter bunker shots">
+          <button class="cat-btn active" data-bcat="all" role="tab" aria-selected="true">All</button>
+          <button class="cat-btn" data-bcat="greenside" role="tab" aria-selected="false">Greenside</button>
+          <button class="cat-btn" data-bcat="fairway" role="tab" aria-selected="false">Fairway</button>
+        </div>
+        <div class="shots-grid" id="bunkerGrid" aria-live="polite"></div>
+      </section>
+
       <!-- ── SWING FAULTS ── -->
       <section id="swing-faults">
         <div class="shots-header">
@@ -193,6 +214,20 @@
           <div class="section-rule" aria-hidden="true"></div>
         </div>
         <div class="rules-grid" id="rulesGrid"></div>
+      </section>
+
+      <!-- ── ROUTINE ── -->
+      <section id="routine">
+        <div class="shots-header">
+          <div class="shots-header-top">
+            <span class="section-tag">Mental Game</span>
+            <span class="section-count" aria-hidden="true">3</span>
+          </div>
+          <h2>Pre-Shot Routine</h2>
+          <p class="sg-intro">Build and run your routine before every shot. Consistency under pressure starts here.</p>
+          <div class="section-rule" aria-hidden="true"></div>
+        </div>
+        <div class="routine-section" id="routineSection"></div>
       </section>
 
       <!-- ── PRACTICE PLANNER ── -->

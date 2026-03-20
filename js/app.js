@@ -827,7 +827,7 @@ if (heroBgText) {
 ───────────────────────────────────────────────────────────── */
 const scrollTopBtn = document.getElementById('scrollTop');
 window.addEventListener('scroll', () => {
-  scrollTopBtn.classList.toggle('visible', window.pageYOffset > 500);
+  scrollTopBtn.classList.toggle('visible', window.pageYOffset > 300);
 }, { passive: true });
 scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 

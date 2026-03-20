@@ -1451,3 +1451,256 @@ footer {
   .plan-actions-row { flex-direction: column; align-items: stretch; }
   .plan-another-btn, .plan-rekey-btn { text-align: center; }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   STRATEGY SECTION
+───────────────────────────────────────────────────────────── */
+#strategy {
+  padding: 9rem 2rem;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+#strategy > * {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+#strategy::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(61, 124, 201, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 10% 85%, rgba(149, 0, 58, 0.07) 0%, transparent 60%);
+}
+
+.strategy-header {
+  margin-bottom: 4rem;
+}
+
+/* ── Sub-block header ── */
+.strategy-block {
+  margin-bottom: 5rem;
+}
+
+.strategy-block-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.strategy-block-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem; font-weight: 900; font-style: italic;
+  color: var(--claret); line-height: 1; flex-shrink: 0;
+}
+
+.strategy-block-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 700; color: var(--text);
+  margin-bottom: 0.3rem; line-height: 1.1;
+}
+
+.strategy-block-text p {
+  font-size: 0.9rem; color: var(--text-dim); line-height: 1.65;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CORE PRINCIPLES GRID
+───────────────────────────────────────────────────────────── */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.principle-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--blue-mid);
+  border-radius: 4px;
+  padding: 1.75rem;
+  position: relative;
+  backdrop-filter: blur(8px);
+  opacity: 0; translate: 0 18px;
+  transition:
+    opacity 0.4s ease,
+    translate 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s,
+    border-color 0.2s,
+    box-shadow 0.3s;
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+
+.principle-card.visible { opacity: 1; translate: 0 0; }
+
+.principle-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(61,124,201,0.12);
+}
+
+.pc-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem; font-weight: 900; font-style: italic;
+  color: var(--blue-mid); line-height: 1;
+  display: block; margin-bottom: 0.75rem;
+}
+
+.pc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--text);
+  line-height: 1.25; margin-bottom: 0.85rem;
+}
+
+.pc-body {
+  font-size: 0.85rem; color: var(--text-dim); line-height: 1.75;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SITUATION GUIDES GRID
+───────────────────────────────────────────────────────────── */
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+.guide-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem 1.25rem;
+  cursor: pointer; position: relative; overflow: hidden;
+  backdrop-filter: blur(8px);
+  opacity: 0; translate: 0 16px;
+  transition:
+    opacity 0.4s ease,
+    translate 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s,
+    background 0.2s,
+    border-color 0.2s,
+    box-shadow 0.3s;
+  transition-delay: calc(var(--i, 0) * 35ms);
+}
+
+.guide-card.visible { opacity: 1; translate: 0 0; }
+
+.guide-card:hover {
+  background: var(--surface-hover);
+  transform: translateY(-3px);
+  border-color: rgba(149, 0, 58, 0.3);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(149,0,58,0.1);
+}
+
+.guide-icon {
+  font-size: 1.4rem; line-height: 1;
+  display: block; margin-bottom: 0.75rem;
+  font-style: normal;
+}
+
+.guide-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 700; color: var(--text);
+  line-height: 1.2; margin-bottom: 0.5rem;
+}
+
+.guide-overview-snippet {
+  font-size: 0.78rem; color: var(--text-faint); line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.guide-arrow {
+  position: absolute; bottom: 1rem; right: 1.25rem;
+  color: var(--claret); font-size: 0.95rem; opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.guide-card:hover .guide-arrow { opacity: 1; transform: translateX(0); }
+
+/* ─────────────────────────────────────────────────────────────
+   GUIDE DETAIL PANEL CONTENT
+───────────────────────────────────────────────────────────── */
+.guide-panel-icon {
+  font-size: 1.6rem; line-height: 1;
+  font-style: normal;
+}
+
+.guide-overview-block {
+  background: rgba(61, 124, 201, 0.06);
+  border-left: 2px solid var(--blue-mid);
+  padding: 1rem 1.25rem;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 1.75rem;
+}
+
+.guide-overview-block p {
+  font-size: 0.9rem; color: var(--text-dim); line-height: 1.7;
+}
+
+.guide-principles-list {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: 3px; overflow: hidden;
+}
+
+.guide-principle-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.guide-principle-item:last-child { border-bottom: none; }
+
+.gp-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 700; font-style: italic;
+  color: var(--blue-mid); line-height: 1; flex-shrink: 0;
+}
+
+.gp-body { flex: 1; }
+
+.gp-title {
+  display: block;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+.gp-body p {
+  font-size: 0.83rem; color: var(--text-dim); line-height: 1.65;
+}
+
+.guide-miss-block {
+  background: rgba(149, 0, 58, 0.07);
+  border: 1px solid rgba(149, 0, 58, 0.2);
+  border-radius: 4px; padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.guide-miss-block p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
+
+.guide-approach-block {
+  background: rgba(61, 124, 201, 0.06);
+  border-left: 2px solid var(--blue-mid);
+  padding: 1rem 1.25rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.guide-approach-block p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
+
+/* ── Strategy responsive ── */
+@media (max-width: 1100px) {
+  .guides-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .principles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .guides-grid { grid-template-columns: repeat(2, 1fr); }
+  .principles-grid { grid-template-columns: 1fr; }
+}

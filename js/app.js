@@ -1113,3 +1113,435 @@ document.addEventListener('keydown', e => {
 /* ── Init ── */
 renderPracticeWeakAreas();
 initConfigGroups();
+
+/* ─────────────────────────────────────────────────────────────
+   STRATEGY — CORE PRINCIPLES & SITUATION GUIDES
+───────────────────────────────────────────────────────────── */
+const CORE_PRINCIPLES = [
+  {
+    id: 'fat-green',
+    title: 'Play to the fat of the green, not the pin',
+    body: 'The pin is placed where it is hardest to get close. The fat of the green — the centre, the largest part, the side away from trouble — is where the scoring happens over time. Hitting to 20 feet from the middle of the green consistently beats gambling at the pin and leaving awkward chips or three-putts from the fringe.'
+  },
+  {
+    id: 'acceptable-miss',
+    title: 'Always know your acceptable miss before pulling a club',
+    body: 'Before every shot, decide which side of the target you can miss and still make a comfortable bogey or better. If you cannot identify an acceptable miss, the target itself is wrong. The acceptable miss defines the shot — not the other way around.'
+  },
+  {
+    id: 'protect-score',
+    title: 'Protect your score after trouble — bogey is fine, triple is not',
+    body: 'When something goes wrong, the round is not over. The goal becomes not making it worse. A bogey from trouble is a good result. Compounding trouble by taking on a risky recovery shot turns one bad hole into two or three. Get back in play, accept the bogey, move on.'
+  },
+  {
+    id: 'favourite-yardage',
+    title: 'Lay up to your favourite yardage rather than forcing a difficult shot',
+    body: 'Every golfer has a distance they feel most comfortable attacking from — typically 80 to 100 yards for amateur golfers, or wherever the short game is strongest. Planning layups to land at this distance, rather than forcing a difficult carry or an awkward in-between club, gives a consistent platform to make pars.'
+  },
+  {
+    id: 'tee-box',
+    title: 'Use tee box position as a free strategic advantage',
+    body: 'The entire width of the tee box is available — not just the centre. Teeing on the right side opens up the left side of the fairway; teeing on the left opens the right. Adjusting tee position to create the best angle into the landing zone costs nothing and is overlooked by most amateur golfers every round.'
+  },
+  {
+    id: 'next-shot',
+    title: 'Play the shot in front of you, not the scorecard',
+    body: 'Thinking about your score, the hole total, how this hole compares to your handicap, or what you need on the remaining holes is noise. The only thing that matters is the shot in front of you. One shot at a time is not motivational language — it is the only way to play to your potential. The scorecard is for after.'
+  }
+];
+
+const SITUATION_GUIDES = [
+  {
+    id: 'dogleg-left',
+    name: 'Dogleg Left',
+    icon: '\u21b2',
+    overview: 'A hole bending left rewards a draw, punishes a right miss into the corner, and creates risk on the inside bend. The primary question is whether cutting the corner is worth it — and for most golfers, it is not.',
+    principles: [
+      {
+        title: 'Position beats distance off the tee',
+        body: 'The ideal drive lands on the right side of the fairway with a clear angle into the green. Trying to cut the corner adds risk with limited reward unless you can comfortably carry the hazard or rough that guards it.'
+      },
+      {
+        title: 'The inside corner is the danger zone',
+        body: 'Trees, rough, or out-of-bounds typically guard the inside of a dogleg left. A ball that drifts left faces the worst recovery on the hole. Aim at the right side of the bend and let the fairway receive the ball.'
+      },
+      {
+        title: 'A draw is an advantage here, but not a requirement',
+        body: 'A controlled draw that follows the fairway curve maximises distance and angle. But a straight ball down the right side is a better outcome than an overdone draw that runs through the fairway into the left rough or worse.'
+      },
+      {
+        title: 'Identify the approach window before committing to a club',
+        body: 'Approach distance and angle change significantly depending on where the drive lands on a dogleg. From the right side, the green opens up. From the left, the angle narrows and trouble becomes more relevant.'
+      }
+    ],
+    miss: 'Miss right. The right rough on a dogleg left leaves an awkward angle but an open shot to the green. The left rough or inside corner means trees, punch-outs, and compounded trouble.',
+    approach: 'The ideal approach position is right-centre of the fairway. From here the pin is accessible from both sides. A left-centre approach position narrows the window to the green significantly.'
+  },
+  {
+    id: 'dogleg-right',
+    name: 'Dogleg Right',
+    icon: '\u21b3',
+    overview: 'A hole bending right rewards a fade or a controlled straight drive down the left, and punishes the inside corner. The mirror of a dogleg left in strategy and in risk.',
+    principles: [
+      {
+        title: 'Position beats distance off the tee',
+        body: 'The ideal drive lands on the left side of the fairway to open the angle into the green. Cutting the right corner adds risk without proportional reward unless the carry is comfortably within range.'
+      },
+      {
+        title: 'The inside corner guards the right side',
+        body: 'Bunkers, trees, or OB typically guard the inside of the bend on a dogleg right. A ball drifting right faces the worst lie on the hole. Aim at the left side of the bend and take what the fairway gives.'
+      },
+      {
+        title: 'A fade is an advantage here, but not a requirement',
+        body: 'A controlled fade that follows the fairway curve is the optimal shape. A straight ball down the left side is better than an overdone fade that curves into trouble on the right.'
+      },
+      {
+        title: 'Left of fairway centre is the preferred approach position',
+        body: 'From left-centre, the green opens up and the right side trouble is taken out of play. Right-centre approach positions narrow the shot window and expose the approach to the corner trouble.'
+      }
+    ],
+    miss: 'Miss left. The left rough on a dogleg right leaves an open approach to the green. The right rough or inside corner means trees, blocked shots, and compounded trouble.',
+    approach: 'Approach from left of centre to maximise the window to the green. From this position, even a slight miss left is manageable. From right of centre, the miss zone shrinks dramatically.'
+  },
+  {
+    id: 'par-3',
+    name: 'Par 3',
+    icon: '3',
+    overview: 'Par 3s are scoring opportunities — the most straightforward holes on the course. The danger is overcomplicating them. The target is clear; the only decision is the club.',
+    principles: [
+      {
+        title: 'Club selection is the decision, not the target',
+        body: 'On a par 3, the target is clear: the green. The entire game is getting club selection right. Err on the side of more club. The majority of amateur golfers miss par 3s short — and short is where the most difficult recoveries live.'
+      },
+      {
+        title: 'The pin is irrelevant if there is trouble short or tight',
+        body: 'If the front of the green has a bunker, water, or a severe slope, ignore the pin position. The target is the back half of the green or the centre. Being through is almost always better than being short into trouble.'
+      },
+      {
+        title: 'Know which side of the green to miss before the shot',
+        body: 'Identify the bail-out side during pre-shot routine. If the pin is tucked left with a bunker, the miss is right. Knowing this before the shot changes aim — not just intention.'
+      },
+      {
+        title: 'Short par 3s are not automatic',
+        body: 'A 130-yard par 3 demands exactly the same process as a 200-yard one. Check the wind, commit to a club, pick a specific target on the green, and execute. The holes that look routine are where concentration drops first.'
+      }
+    ],
+    miss: 'Miss to the fat of the green — never short of it. Short misses leave the most difficult recoveries on par 3s: bunkers, water, steep downhill chips. A miss long, while not ideal, almost always leaves a straightforward chip or a manageable putt.',
+    approach: 'Aim at a point on the green that gives three metres of margin on both sides — not at the flag. The flag is a small target. The fat of the green is a large one. Birdie from the middle of a green is possible; bogey from a front bunker is likely.'
+  },
+  {
+    id: 'par5-reachable',
+    name: 'Par 5 \u2014 Reachable',
+    icon: '5\u2193',
+    overview: 'A reachable par 5 is a birdie opportunity — and a double bogey waiting to happen if the second shot decision is wrong. The decision to go must be made calmly, not ambitiously.',
+    principles: [
+      {
+        title: 'Layup is not failure',
+        body: 'If the second shot requires a perfect carry over water, a precise line through a tight gap, or a low-percentage long iron, a layup to the favourite yardage is the smarter play. Birdies come from good wedge play as often as from heroic second shots.'
+      },
+      {
+        title: 'Going for it requires a clear flight path',
+        body: 'If there is water, OB, or a narrow window to the green, the decision to go requires both the ability to execute and a genuinely clear path. Attempting a shot that requires 95% execution is not bold — it is poor course management.'
+      },
+      {
+        title: 'Landing zone awareness matters more than carry distance',
+        body: 'Even when going for it is right, consider where the ball will land. A fairway wood that reaches the front bunker is no better than being 100 yards short. Pick the club that puts the ball on the green or leaves a manageable pitch.'
+      },
+      {
+        title: 'A good drive makes the decision easier',
+        body: 'The second shot decision on a reachable par 5 starts on the tee. Driving to the correct position — not necessarily the longest position — opens the most options. A good drive in the right position is worth more than a long drive in the rough.'
+      }
+    ],
+    miss: 'Miss short and right when the green is protected left by water. A shot that stays short of the water leaves a chip. A miss left that catches the hazard costs a penalty stroke and risks a double or worse.',
+    approach: 'When going for a reachable par 5 in two, aim at the centre or fat side of the green. Trying to get close to a tucked pin with a fairway wood or long iron is the riskiest shot in amateur golf. Take what the fat of the green gives you.'
+  },
+  {
+    id: 'par5-long',
+    name: 'Par 5 \u2014 Long',
+    icon: '5\u2192',
+    overview: 'An unreachable par 5 is a three-shot hole. The strategy is about placing the ball correctly at each stage rather than treating the hole as a distance contest.',
+    principles: [
+      {
+        title: 'Three smart shots beat two ambitious ones and one poor one',
+        body: 'The goal is par with a birdie opportunity, not eagle with a double bogey alternative. Plan three shots that each leave a comfortable next shot. Birdie comes from good execution, not from forcing distance at every stage.'
+      },
+      {
+        title: 'The layup is the most important shot on the hole',
+        body: 'Where the second shot lands defines the third. Aim for the favourite yardage, not the furthest point possible. A wedge from 90 yards beats a long iron from 50 yards every time.'
+      },
+      {
+        title: 'Driver is not always correct off the tee',
+        body: 'On a very long par 5 with a tight fairway or trouble off the tee, a 3-wood or hybrid that finds the fairway puts the ball in play and simplifies everything after. A driver in the rough adds shots, not eliminates them.'
+      },
+      {
+        title: 'The third shot is where the score is made',
+        body: 'A well-placed layup creates a full wedge to the green. Commit to this shot as if it were a par 3. Go through the full pre-shot routine. Pick a specific target on the green. This is the shot that separates a birdie from a par.'
+      }
+    ],
+    miss: 'Miss the green on the non-trouble side. The third shot is a scoring opportunity — missing on the bail-out side leaves a comfortable chip and a par opportunity. Missing on the trouble side risks compounding to bogey or double.',
+    approach: 'Play the third shot as a par 3. Pick a specific target on the green — not just "the green." This is the shot that determines the hole score. Give it the same attention as a par 3 approach, because that is exactly what it is.'
+  },
+  {
+    id: 'water-left',
+    name: 'Water Left',
+    icon: '\u25c0\ud83c\udf0a',
+    overview: 'Water on the left side demands a consistent bias to the right across every shot on the hole — from tee to green. There is no ambiguity about which side is wrong.',
+    principles: [
+      {
+        title: 'Start every club right of the intended line',
+        body: 'Whether on the tee, the fairway, or the approach, the target line should be set so that a ball missing left still stays dry. This is not paranoia — it is correct course management for this hole type.'
+      },
+      {
+        title: 'The right side of the fairway is always correct',
+        body: 'On a water-left hole, the right rough is the acceptable miss. Playing from light rough right of the fairway is recoverable. Playing from a water hazard is not. Right rough, right bunker, right of the green — all better than left water.'
+      },
+      {
+        title: 'A draw or hook shape carries higher risk',
+        body: 'If the natural shot shape is a draw, extra care is needed on water-left holes. A draw that turns over slightly more than intended goes directly toward the penalty zone. Consider a fade or a straight ball as the primary shape for this hole.'
+      },
+      {
+        title: 'Short of the water is better than long into the water',
+        body: 'When the approach has water left, the instinct is to clear it. The smarter play is to know that the short-right bail-out is a fine result — a chip from there scores better than a drop from the hazard.'
+      }
+    ],
+    miss: 'Miss right, every time. On water-left holes there is no ambiguity. A missed approach that stays right of the green leaves a chip. A missed approach that catches the water costs a penalty stroke and typically results in a double bogey.',
+    approach: 'Aim at the right side of the green or right of centre. Let the ball work left if it must — it will still be on the green. Starting the shot over water or directly at a left-side pin on a water-left hole is high risk with minimal reward.'
+  },
+  {
+    id: 'water-right',
+    name: 'Water Right',
+    icon: '\ud83c\udf0a\u25b6',
+    overview: 'The mirror of water-left. Water on the right side demands a consistent bias left in every target. The right side of this hole is simply not an option.',
+    principles: [
+      {
+        title: 'Start every club left of the intended line',
+        body: 'Set aim so that a ball missing right still stays dry. This applies at every shot from tee to green — not just on the approach. A consistent left bias throughout the hole eliminates the water as a factor.'
+      },
+      {
+        title: 'The left side of the fairway is always correct',
+        body: 'The left rough is the acceptable miss on water-right holes. Even a ball in the left trees is recoverable within the same score range. A ball in the right water is a guaranteed minimum of one penalty stroke.'
+      },
+      {
+        title: 'A fade or slice shape carries higher risk',
+        body: 'A fade that holds too long, or curves more than expected, goes directly toward the hazard. Consider drawing or keeping the ball straight when playing water-right. The wind direction also matters — a left-to-right wind on a water-right hole demands extra care.'
+      },
+      {
+        title: 'The bail-out left is a planned position, not an accident',
+        body: 'A layup or approach that finishes left of the intended target on a water-right hole is often a successful shot. Accept the result and chip or putt from there. Left is the designed miss for this hole.'
+      }
+    ],
+    miss: 'Miss left, every time. No ambiguity. Left rough, left fringe, left of the green — all recoverable. Right-side water means a penalty stroke, a replay or drop, and at minimum a double bogey.',
+    approach: 'Aim left of centre on the approach. A ball that stays left of the pin and left of the green is the designed acceptable miss for this hole. Any shot played directly at a right-side pin on a water-right hole requires very high execution to justify the risk.'
+  },
+  {
+    id: 'ob-left',
+    name: 'OB Left',
+    icon: '\u274c\u2190',
+    overview: 'Out of bounds on the left is the most punishing situation in golf — stroke and distance. Unlike a water hazard, OB costs two shots in effect. The left boundary must be treated as a wall.',
+    principles: [
+      {
+        title: 'OB is a two-shot penalty in effect',
+        body: 'Unlike a water hazard, OB requires replaying from the same spot plus a penalty stroke. On a par 4, OB left means making triple at minimum without a perfect recovery. The left boundary must be non-negotiable — there is no acceptable version of going there.'
+      },
+      {
+        title: 'Aim well right, not just slightly right',
+        body: 'The aim adjustment for OB left should be pronounced. Setting up on the right side of the tee box and aiming at the right side of the fairway gives maximum distance from the boundary. A small aim adjustment is not enough on a tight OB hole.'
+      },
+      {
+        title: 'Grip down and control the swing on OB holes',
+        body: 'When the left boundary is close, this is not the time for an aggressive full swing. Gripping down, taking one extra club, and swinging at 80% keeps the ball in play. A 200-yard shot in the fairway is worth more than a 240-yard shot out of bounds.'
+      },
+      {
+        title: 'Play a provisional ball — always',
+        body: 'If there is any doubt a ball has gone OB, play a provisional immediately. Walking to the boundary to check and returning to the tee adds five to ten minutes and breaks the rhythm of the hole. The provisional costs nothing if the original is found in bounds.'
+      }
+    ],
+    miss: 'Miss right, at all costs. Right rough, right bunker, right trees — all recoverable within the same score range. OB left means replaying from the tee or the original spot plus a penalty stroke, which typically costs two shots on the card.',
+    approach: 'On the approach to a green with OB left, aim right of centre. A chip from the right rough scores better than a penalty from OB. If the pin is tucked left near the boundary, the correct play is to the safe centre of the green — not at the flag.'
+  },
+  {
+    id: 'tucked-pin',
+    name: 'Tight / Tucked Pin',
+    icon: '\ud83d\udea9',
+    overview: 'A pin tucked close to a bunker, water, or edge demands a target adjustment. The correct response is to aim away from the trouble, not closer to the pin. The pin is not the target.',
+    principles: [
+      {
+        title: 'The pin is not the target',
+        body: 'On a tucked pin, the flag is a trap. The correct target is the fat of the green on the opposite side from the trouble. A two-putt from 25 feet is almost always achievable. A chip from a bunker or a chip from a tight lie near the fringe is less certain.'
+      },
+      {
+        title: 'Club up and take more green',
+        body: 'When aiming away from a tucked pin, the additional distance to the fat of the green often warrants an extra half or full club. This also reduces the likelihood of a short miss, which is the second most dangerous outcome on a tight pin.'
+      },
+      {
+        title: 'A birdie putt is the right goal, not a tap-in',
+        body: 'Aim for the fat of the green. The resulting birdie putt may be longer than if the ball finished close to the pin, but that is the correct trade-off. Par from the middle of the green consistently beats bogey from the bunker.'
+      },
+      {
+        title: 'Identify the tucked side and commit before the shot',
+        body: 'The decision to play away from the pin should be made during the pre-shot routine, not mid-swing. Committing late to a conservative target produces a weak, directionless shot that often ends up exactly where you were trying to avoid.'
+      }
+    ],
+    miss: 'Miss to the fat side of the green — never to the tucked side. If the pin is tucked left with a bunker, the miss is right. If tucked right with water, the miss is left. There is no scenario where missing on the trouble side of a tucked pin is the correct play.',
+    approach: 'Mentally add one club for a tucked pin — not because the distance is longer, but because the target is the middle or far side of the green rather than the nearest point to the hole. Commit to this target fully and let the result be a long birdie putt rather than a bunker.'
+  },
+  {
+    id: 'into-wind',
+    name: 'Into the Wind',
+    icon: '\u2190\ud83c\udf2c',
+    overview: 'Playing into a headwind amplifies every mistake and demands a reduction in ambition paired with an increase in control. Most amateur golfers respond to wind by swinging harder — which makes every problem worse.',
+    principles: [
+      {
+        title: 'Take significantly more club',
+        body: 'Wind into the face reduces carry distance materially. The rule of thumb is one extra club per 10 mph of headwind for mid-irons, more for long irons and woods. Most amateur golfers underclub into the wind by one to two clubs on every approach shot.'
+      },
+      {
+        title: 'Swing easier, not harder',
+        body: 'Swinging harder into the wind adds backspin and height, which causes the ball to balloon and lose even more distance than the wind already takes. The correct response is to club up and swing at 75 to 80 percent. A smooth, controlled swing stays lower and holds its line.'
+      },
+      {
+        title: 'Play a knockdown or punch to reduce spin',
+        body: 'Moving the ball back in the stance and finishing low reduces spin and keeps the ball under the wind. This is the most effective shot type when playing into a strong headwind. The ball will fly lower and run more on landing — account for this in club selection.'
+      },
+      {
+        title: 'Misses are amplified — pick targets accordingly',
+        body: 'A shot that leaks slightly right in calm conditions will leak significantly right into a headwind. Wind pushes a draw, holds a fade, and exaggerates hooks and slices. Pick a target that accounts for this and favour a shot shape that works with the wind direction rather than against it.'
+      }
+    ],
+    miss: 'Miss short and in the middle. Into the wind, going long is nearly impossible — the wind prevents it. Short misses are common and should be planned for. Set the target at the back of the green and accept that the ball will often finish short of it. A short miss in the centre is always manageable.',
+    approach: 'Set the target at the back of the green or the back of the hole area. Into a headwind, the ball will not fly as far, the wind will frequently cause a short miss, and the centre-to-back landing zone produces the most manageable putts even when the shot comes up slightly short.'
+  }
+];
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER: CORE PRINCIPLES
+───────────────────────────────────────────────────────────── */
+function renderCorePrinciples() {
+  const grid = document.getElementById('principlesGrid');
+  grid.innerHTML = CORE_PRINCIPLES.map((p, i) => `
+    <div class="principle-card" style="--i:${i}">
+      <span class="pc-num">0${i + 1}</span>
+      <h4 class="pc-title">${p.title}</h4>
+      <p class="pc-body">${p.body}</p>
+    </div>
+  `).join('');
+
+  requestAnimationFrame(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    grid.querySelectorAll('.principle-card').forEach(c => obs.observe(c));
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER: SITUATION GUIDES
+───────────────────────────────────────────────────────────── */
+function renderSituationGuides() {
+  const grid = document.getElementById('guidesGrid');
+  grid.innerHTML = SITUATION_GUIDES.map((g, i) => `
+    <article
+      class="guide-card"
+      data-guide="${g.id}"
+      style="--i:${i}"
+      role="button"
+      tabindex="0"
+      aria-label="View ${g.name} strategy guide"
+    >
+      <span class="guide-icon" aria-hidden="true">${g.icon}</span>
+      <h3 class="guide-name">${g.name}</h3>
+      <p class="guide-overview-snippet">${g.overview.slice(0, 80)}\u2026</p>
+      <span class="guide-arrow" aria-hidden="true">\u2192</span>
+    </article>
+  `).join('');
+
+  grid.querySelectorAll('.guide-card').forEach(card => {
+    const open = () => openGuidePanel(card.dataset.guide);
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  });
+
+  requestAnimationFrame(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    grid.querySelectorAll('.guide-card').forEach(c => obs.observe(c));
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GUIDE DETAIL PANEL (reuses shot-panel DOM)
+───────────────────────────────────────────────────────────── */
+function openGuidePanel(id) {
+  const guide   = SITUATION_GUIDES.find(g => g.id === id);
+  if (!guide) return;
+
+  const panel   = document.getElementById('shotPanel');
+  const inner   = document.getElementById('panelInner');
+  const overlay = document.getElementById('panelOverlay');
+
+  inner.innerHTML = `
+    <div class="panel-scroll">
+      <button class="panel-close" id="panelClose" aria-label="Close">\u2715</button>
+
+      <div class="panel-head">
+        <span class="panel-badge shape">Strategy</span>
+        <span class="guide-panel-icon" aria-hidden="true">${guide.icon}</span>
+      </div>
+
+      <h2 class="panel-title">${guide.name}</h2>
+
+      <div class="guide-overview-block">
+        <span class="thought-label">Overview</span>
+        <p>${guide.overview}</p>
+      </div>
+
+      <div class="panel-section">
+        <h4 class="panel-section-title">Strategic Principles</h4>
+        <div class="guide-principles-list">
+          ${guide.principles.map((p, i) => `
+            <div class="guide-principle-item">
+              <span class="gp-num">0${i + 1}</span>
+              <div class="gp-body">
+                <strong class="gp-title">${p.title}</strong>
+                <p>${p.body}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="guide-miss-block">
+        <span class="watchout-label">Miss management</span>
+        <p>${guide.miss}</p>
+      </div>
+
+      <div class="guide-approach-block">
+        <span class="thought-label">Approach note</span>
+        <p>${guide.approach}</p>
+      </div>
+    </div>
+  `;
+
+  panel.removeAttribute('aria-hidden');
+  overlay.classList.add('active');
+  document.body.classList.add('panel-open');
+
+  inner.querySelector('#panelClose').addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel, { once: true });
+  inner.querySelector('#panelClose').focus();
+}
+
+/* ── Init ── */
+renderCorePrinciples();
+renderSituationGuides();

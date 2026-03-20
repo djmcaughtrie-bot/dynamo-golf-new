@@ -23,6 +23,7 @@
           <li><a href="#">Home</a></li>
           <li><a href="#shots">Shots</a></li>
           <li><a href="#short-game">Short Game</a></li>
+          <li><a href="#practice">Practice</a></li>
         </ul>
       </nav>
     </header>
@@ -110,6 +111,105 @@
 
     </main>
 
+      <!-- ── PRACTICE PLANNER ── -->
+      <section id="practice">
+        <div class="practice-header">
+          <div class="shots-header-top">
+            <span class="section-tag">AI-Powered</span>
+            <span class="section-count" aria-hidden="true">AI</span>
+          </div>
+          <h2>Practice Planner</h2>
+          <p class="sg-intro">Select your weak areas and get a personalised, timed range session built by AI.</p>
+          <div class="section-rule" aria-hidden="true"></div>
+        </div>
+
+        <div class="practice-form" id="practiceForm">
+
+          <!-- Step 1 -->
+          <div class="practice-step">
+            <div class="step-header">
+              <span class="step-num">01</span>
+              <div class="step-text">
+                <h3>Select weak areas</h3>
+                <p>Choose everything that needs work — the AI uses the combination to build a targeted session.</p>
+              </div>
+            </div>
+            <div class="pill-grid" id="pillGrid"></div>
+            <p class="pill-hint" id="pillHint">Select at least one area to continue.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="practice-step">
+            <div class="step-header">
+              <span class="step-num">02</span>
+              <div class="step-text">
+                <h3>Configure the session</h3>
+                <p>Set your time, skill level, and available equipment.</p>
+              </div>
+            </div>
+            <div class="config-form">
+              <div class="config-group">
+                <label class="config-label">Duration</label>
+                <div class="btn-group" id="durationGroup" role="radiogroup" aria-label="Session duration">
+                  <button class="btn-group-item" data-value="30" role="radio" aria-checked="false">30 min</button>
+                  <button class="btn-group-item" data-value="45" role="radio" aria-checked="false">45 min</button>
+                  <button class="btn-group-item active" data-value="60" role="radio" aria-checked="true">60 min</button>
+                  <button class="btn-group-item" data-value="90" role="radio" aria-checked="false">90 min</button>
+                  <button class="btn-group-item" data-value="120" role="radio" aria-checked="false">120 min</button>
+                </div>
+              </div>
+              <div class="config-group">
+                <label class="config-label">Skill level</label>
+                <div class="btn-group" id="skillGroup" role="radiogroup" aria-label="Skill level">
+                  <button class="btn-group-item" data-value="beginner" role="radio" aria-checked="false">Beginner</button>
+                  <button class="btn-group-item active" data-value="intermediate" role="radio" aria-checked="true">Intermediate</button>
+                  <button class="btn-group-item" data-value="low handicap" role="radio" aria-checked="false">Low Handicap</button>
+                  <button class="btn-group-item" data-value="scratch" role="radio" aria-checked="false">Scratch</button>
+                </div>
+              </div>
+              <div class="config-group">
+                <label class="config-label">Available equipment</label>
+                <div class="btn-group" id="equipGroup" role="radiogroup" aria-label="Available equipment">
+                  <button class="btn-group-item active" data-value="full range" role="radio" aria-checked="true">Full Range</button>
+                  <button class="btn-group-item" data-value="chipping area only" role="radio" aria-checked="false">Chipping Area</button>
+                  <button class="btn-group-item" data-value="putting green only" role="radio" aria-checked="false">Putting Green</button>
+                  <button class="btn-group-item" data-value="full course" role="radio" aria-checked="false">Full Course</button>
+                  <button class="btn-group-item" data-value="at home with no balls" role="radio" aria-checked="false">At Home</button>
+                </div>
+              </div>
+              <div class="config-group">
+                <label class="config-label" for="focusInput">
+                  Specific focus
+                  <span class="config-optional">(optional)</span>
+                </label>
+                <textarea
+                  class="focus-input"
+                  id="focusInput"
+                  placeholder="e.g. pre-tournament nerves, fairway bunker at my home course..."
+                  rows="2"
+                  aria-describedby="focusHint"
+                ></textarea>
+                <p class="focus-hint" id="focusHint">Anything not covered by the areas above.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="practice-step practice-step--cta">
+            <button class="generate-btn" id="generateBtn" disabled aria-describedby="generateNote">
+              <span class="generate-label">Generate Plan</span>
+              <span class="generate-icon" aria-hidden="true">→</span>
+            </button>
+            <p class="generate-note" id="generateNote">Powered by Claude AI · Results in ~10 seconds</p>
+          </div>
+
+        </div>
+
+        <!-- Result -->
+        <div class="plan-result" id="planResult" hidden aria-live="polite"></div>
+
+      </section>
+
     <!-- Shot detail panel -->
     <div class="shot-panel" id="shotPanel" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Shot detail">
       <div class="panel-inner" id="panelInner"></div>
@@ -129,6 +229,28 @@
         </div>
       </div>
     </footer>
+
+    <!-- API Key Modal -->
+    <div class="api-modal" id="apiModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="apiModalTitle">
+      <div class="api-modal-inner">
+        <h3 id="apiModalTitle">Anthropic API Key</h3>
+        <p>Enter your API key to generate AI-powered practice plans. It's stored locally in your browser and sent only to Anthropic's API.</p>
+        <input
+          type="password"
+          class="api-key-input"
+          id="apiKeyInput"
+          placeholder="sk-ant-..."
+          autocomplete="off"
+          aria-label="Anthropic API key"
+        />
+        <div class="api-modal-actions">
+          <button class="api-modal-cancel" id="apiModalCancel">Cancel</button>
+          <button class="api-modal-save" id="apiModalSave">Save &amp; Generate</button>
+        </div>
+        <p class="api-modal-note">Get a key at console.anthropic.com</p>
+      </div>
+    </div>
+    <div class="api-modal-overlay" id="apiModalOverlay"></div>
 
     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
     <script src="js/app.js"></script>

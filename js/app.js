@@ -809,3 +809,307 @@ renderShots('all');
 initFilter();
 renderReleases();
 initDecisionTree();
+
+/* ─────────────────────────────────────────────────────────────
+   PRACTICE PLANNER
+───────────────────────────────────────────────────────────── */
+const WEAK_AREAS = [
+  'Driver accuracy', 'Fairway woods', 'Long irons', 'Mid irons',
+  'Short irons', 'Wedge distance control', 'Spinning wedges',
+  'Chipping (Release 1)', 'Pitching (Release 2)', 'Lob shot (Release 3)',
+  'Greenside bunkers', 'Fairway bunkers', 'Awkward lies',
+  'Course management', 'Putting — reading', 'Putting — pace',
+  'Mental game', 'Grip fundamentals'
+];
+
+const practiceState = {
+  selected:  new Set(),
+  duration:  60,
+  skill:     'intermediate',
+  equipment: 'full range',
+  focus:     ''
+};
+
+/* ── Pills ── */
+function renderPracticeWeakAreas() {
+  const grid = document.getElementById('pillGrid');
+  grid.innerHTML = WEAK_AREAS.map(area =>
+    `<button class="weak-pill" data-area="${area}" aria-pressed="false">${area}</button>`
+  ).join('');
+
+  grid.querySelectorAll('.weak-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const area = pill.dataset.area;
+      if (practiceState.selected.has(area)) {
+        practiceState.selected.delete(area);
+        pill.setAttribute('aria-pressed', 'false');
+        pill.classList.remove('selected');
+      } else {
+        practiceState.selected.add(area);
+        pill.setAttribute('aria-pressed', 'true');
+        pill.classList.add('selected');
+      }
+      syncPillHint();
+      syncGenerateBtn();
+    });
+  });
+}
+
+function syncPillHint() {
+  const hint  = document.getElementById('pillHint');
+  const count = practiceState.selected.size;
+  hint.textContent = count === 0
+    ? 'Select at least one area to continue.'
+    : `${count} area${count > 1 ? 's' : ''} selected`;
+  hint.classList.toggle('hint--has-selection', count > 0);
+}
+
+function syncGenerateBtn() {
+  document.getElementById('generateBtn').disabled = practiceState.selected.size === 0;
+}
+
+/* ── Config button groups ── */
+function initConfigGroups() {
+  function wireGroup(id, stateKey, parser) {
+    document.getElementById(id).querySelectorAll('.btn-group-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById(id).querySelectorAll('.btn-group-item').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        practiceState[stateKey] = parser ? parser(btn.dataset.value) : btn.dataset.value;
+      });
+    });
+  }
+
+  wireGroup('durationGroup', 'duration', v => parseInt(v, 10));
+  wireGroup('skillGroup',    'skill');
+  wireGroup('equipGroup',    'equipment');
+
+  document.getElementById('focusInput').addEventListener('input', e => {
+    practiceState.focus = e.target.value.trim();
+  });
+}
+
+/* ── Generate button ── */
+document.getElementById('generateBtn').addEventListener('click', () => {
+  const key = localStorage.getItem('anthropic_api_key');
+  if (!key) { openApiModal(); } else { runGenerate(key); }
+});
+
+async function runGenerate(apiKey) {
+  const btn      = document.getElementById('generateBtn');
+  const resultEl = document.getElementById('planResult');
+
+  btn.disabled = true;
+  btn.querySelector('.generate-label').textContent = 'Generating\u2026';
+  btn.querySelector('.generate-icon').textContent  = '';
+  btn.classList.add('loading');
+
+  resultEl.hidden = false;
+  resultEl.innerHTML = `
+    <div class="plan-loading">
+      <div class="plan-spinner"></div>
+      <p>Building your session\u2026</p>
+    </div>
+  `;
+  resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  const areas  = [...practiceState.selected].join(', ');
+  const prompt = [
+    'You are an expert golf coach. Build a personalised, timed practice plan.',
+    '',
+    'Weak areas: ' + areas,
+    'Duration: ' + practiceState.duration + ' minutes',
+    'Skill level: ' + practiceState.skill,
+    'Equipment available: ' + practiceState.equipment,
+    'Specific focus: ' + (practiceState.focus || 'None'),
+    '',
+    'All block durations including warmup and cooldown must sum to exactly ' + practiceState.duration + ' minutes.',
+    'Respond ONLY in JSON, no markdown:',
+    '{',
+    '  "sessionTitle": "",',
+    '  "sessionGoal": "",',
+    '  "warmup": { "duration": 5, "description": "" },',
+    '  "blocks": [{ "title": "", "duration": 10, "shots": [""], "drill": "", "reps": "", "focus": "", "progression": "" }],',
+    '  "cooldown": { "duration": 5, "description": "" },',
+    '  "coachNote": ""',
+    '}'
+  ].join('\n');
+
+  try {
+    const raw  = await callAnthropicAPI(prompt, apiKey);
+    const plan = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    renderPlan(plan);
+  } catch (err) {
+    resultEl.innerHTML = `
+      <div class="plan-error">
+        <strong>Generation failed.</strong>
+        <p>${err.message || 'Check your API key and try again.'}</p>
+        ${err.isAuth ? '<button class="plan-error-rekey" id="planRekey">Update API Key</button>' : ''}
+      </div>
+    `;
+    document.getElementById('planRekey')?.addEventListener('click', openApiModal);
+  } finally {
+    btn.disabled = practiceState.selected.size === 0;
+    btn.querySelector('.generate-label').textContent = 'Generate Plan';
+    btn.querySelector('.generate-icon').textContent  = '\u2192';
+    btn.classList.remove('loading');
+  }
+}
+
+async function callAnthropicAPI(prompt, apiKey) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type':          'application/json',
+      'x-api-key':             apiKey,
+      'anthropic-version':     '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model:      'claude-sonnet-4-6',
+      max_tokens: 2000,
+      messages:   [{ role: 'user', content: prompt }]
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    const e   = new Error(err.error?.message || `HTTP ${res.status}`);
+    e.isAuth  = res.status === 401;
+    throw e;
+  }
+
+  const data = await res.json();
+  return data.content.map(c => c.text || '').join('');
+}
+
+/* ── Render plan ── */
+function renderPlan(plan) {
+  const resultEl = document.getElementById('planResult');
+
+  resultEl.innerHTML = `
+    <div class="plan-inner">
+      <div class="plan-top">
+        <div class="plan-top-meta">
+          <span class="section-tag">Your session</span>
+          <span class="plan-duration-badge">${practiceState.duration} min</span>
+        </div>
+        <h2 class="plan-title">${plan.sessionTitle}</h2>
+        <div class="plan-goal-block">
+          <span class="plan-goal-label">Session goal</span>
+          <p>${plan.sessionGoal}</p>
+        </div>
+      </div>
+
+      <div class="plan-block warmup-block">
+        <div class="plan-block-header">
+          <span class="block-type-label">Warm-up</span>
+          <span class="block-time-badge">${plan.warmup.duration} min</span>
+        </div>
+        <p class="block-simple-desc">${plan.warmup.description}</p>
+      </div>
+
+      <div class="plan-blocks-list">
+        ${plan.blocks.map((block, i) => `
+          <div class="plan-block practice-block">
+            <div class="plan-block-header">
+              <span class="block-index">0${i + 1}</span>
+              <h3 class="block-title">${block.title}</h3>
+              <span class="block-time-badge">${block.duration} min</span>
+            </div>
+            ${block.shots && block.shots.length ? `
+              <div class="block-shots-row">
+                ${block.shots.map(s => `<span class="block-shot-tag">${s}</span>`).join('')}
+              </div>
+            ` : ''}
+            <div class="block-details-grid">
+              <div class="block-detail-row">
+                <span class="bd-label">Drill</span>
+                <span class="bd-value">${block.drill}</span>
+              </div>
+              <div class="block-detail-row">
+                <span class="bd-label">Reps</span>
+                <span class="bd-value">${block.reps}</span>
+              </div>
+              <div class="block-detail-row">
+                <span class="bd-label">Focus</span>
+                <span class="bd-value">${block.focus}</span>
+              </div>
+              <div class="block-detail-row block-detail-row--prog">
+                <span class="bd-label">Progression</span>
+                <span class="bd-value">${block.progression}</span>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="plan-block cooldown-block">
+        <div class="plan-block-header">
+          <span class="block-type-label">Cool-down</span>
+          <span class="block-time-badge">${plan.cooldown.duration} min</span>
+        </div>
+        <p class="block-simple-desc">${plan.cooldown.description}</p>
+      </div>
+
+      <div class="coach-note-block">
+        <span class="coach-note-label">Coach note</span>
+        <p>${plan.coachNote}</p>
+      </div>
+
+      <div class="plan-actions-row">
+        <button class="plan-another-btn" id="planAnotherBtn">\u21ba Plan Another Session</button>
+        <button class="plan-rekey-btn" id="planRekeyBtn">Update API Key</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('planAnotherBtn').addEventListener('click', () => {
+    resultEl.hidden = true;
+    resultEl.innerHTML = '';
+    document.getElementById('practiceForm').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('planRekeyBtn').addEventListener('click', openApiModal);
+}
+
+/* ── API Key Modal ── */
+function openApiModal() {
+  const input    = document.getElementById('apiKeyInput');
+  const existing = localStorage.getItem('anthropic_api_key');
+  if (existing) input.value = existing;
+  document.getElementById('apiModal').removeAttribute('aria-hidden');
+  document.getElementById('apiModalOverlay').classList.add('active');
+  input.focus();
+}
+
+function closeApiModal() {
+  document.getElementById('apiModal').setAttribute('aria-hidden', 'true');
+  document.getElementById('apiModalOverlay').classList.remove('active');
+}
+
+document.getElementById('apiModalSave').addEventListener('click', () => {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (!key) return;
+  localStorage.setItem('anthropic_api_key', key);
+  closeApiModal();
+  runGenerate(key);
+});
+
+document.getElementById('apiModalCancel').addEventListener('click', closeApiModal);
+
+document.getElementById('apiModalOverlay').addEventListener('click', closeApiModal);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('apiModal').getAttribute('aria-hidden') !== 'true') {
+    closeApiModal();
+  }
+});
+
+/* ── Init ── */
+renderPracticeWeakAreas();
+initConfigGroups();

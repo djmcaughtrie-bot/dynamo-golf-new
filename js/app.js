@@ -1948,3 +1948,469 @@ const EXCUSE_LIBRARY = {
 
   renderLibrary();
 })();
+
+/* ═══════════════════════════════════════════════════════════════
+   PUTTING MODULE
+═══════════════════════════════════════════════════════════════ */
+const PUTTING_TOPICS = [
+  {
+    id: 'green-reading', name: 'Green Reading',
+    intro: 'Reading the break correctly before you putt is more valuable than a perfect stroke on the wrong line.',
+    points: [
+      { heading: 'Read from behind the ball, 10–15 feet back', body: 'Stand behind the ball and look at the overall slope between ball and hole. This gives you the big picture — the dominant break direction that will affect the whole putt.' },
+      { heading: 'The last 3 feet decide everything', body: 'The ball is slowest near the hole and breaks the most in the final section. Read the last 3 feet most carefully. A putt that looks straight from distance often breaks a full cup\'s width at the end.' },
+      { heading: 'Feel the slope under your feet', body: 'Walk the line of the putt and pay attention to what the ground tells your feet. Uphill or downhill is often felt more accurately than it is seen. Your body registers slope before your eyes fully process it.' },
+      { heading: 'Most putts break less than you think', body: 'Amateur golfers consistently over-read break. If you\'re unsure between a full cup of break and half a cup, trust half. The tendency to over-read is almost universal.' },
+      { heading: 'Grain matters on links and Bermuda grass', body: 'Putting into the grain slows the ball significantly; downgrain speeds it up. A dull surface means you\'re putting into the grain; a shiny surface means you\'re going with it.' }
+    ]
+  },
+  {
+    id: 'stroke-types', name: 'Stroke Types',
+    intro: 'There is no single correct putting stroke — but there is a correct stroke for your posture, putter, and tendencies.',
+    points: [
+      { heading: 'The arc stroke', body: 'The most natural stroke for most golfers. The putter swings on a gentle arc — slightly inside on the backswing, square at impact, slightly inside through. The face opens and closes slightly, matching the arc. Requires consistent rotation to stay on track.' },
+      { heading: 'Straight-back straight-through (SBST)', body: 'The putter moves on a linear path with the face staying square throughout. Works best with upright posture and a face-balanced putter. Reduces moving parts but magnifies any deviation in face angle.' },
+      { heading: 'The cross-hand (left-hand low) grip', body: 'Left hand below right. Levels the shoulders, reduces the dominant hand from taking over, and limits wrist breakdown through impact. Particularly effective if your right wrist tends to flip at impact.' },
+      { heading: 'The claw grip', body: 'The trail hand holds the grip in the fingers only, palm facing away. Removes the trail hand\'s ability to flip or twitch. Highly effective for players who struggle with inconsistent right-hand pressure.' },
+      { heading: 'Whatever the stroke — face must be square at impact', body: 'Face angle at impact determines 75–80% of a putt\'s starting direction. Path matters less on the green than anywhere else in golf. The entire goal of any stroke type is a consistently square face at the moment the ball leaves the putter.' }
+    ]
+  },
+  {
+    id: 'distance-control', name: 'Distance Control',
+    intro: 'More 3-putts come from poor distance control than from misreading break. Get the pace right and the line becomes manageable.',
+    points: [
+      { heading: 'Backswing length controls distance — not acceleration', body: 'Vary the length of the backswing while keeping acceleration through the ball consistent. A longer backswing for longer putts. Trying to hit harder with a short backswing causes deceleration and inconsistency.' },
+      { heading: 'Uphill needs more pace; downhill needs less', body: 'Uphill putts require more pace — the ball will die before it over-runs. Downhill putts require less pace — the ball will trickle further than expected. Reverse the intuition you feel on slopes.' },
+      { heading: 'The gate drill', body: 'Place two tees slightly wider than your putter head, 6 inches in front of the ball. Practise rolling the ball through the gate with different backswing lengths. Builds path consistency and prevents the club head from twisting at impact.' },
+      { heading: 'Practise from long range — 30, 40, 50 feet', body: 'Most practice sessions happen from 3–8 feet. Distance control lives at 25–60 feet. Spend half your green time on lag putts from the distances you\'ll actually face on the course.' },
+      { heading: 'Aim for a 3-foot circle, not the hole', body: 'From beyond 20 feet, the target is a 3-foot circle around the hole, not the hole itself. This removes the expectation of holing the putt and focuses attention on the correct thing: pace.' }
+    ]
+  },
+  {
+    id: 'lag-putting', name: 'Lag Putting',
+    intro: 'The ability to leave long putts within 3 feet is the single biggest scoring improvement most amateur golfers can make.',
+    points: [
+      { heading: '3-putt avoidance is the goal, not holing it', body: 'From beyond 25 feet, the aim is not to 2-putt — it is to not 3-putt. A putt leaving you 3 feet away is the ideal result. Reset the expectation and the pressure drops immediately.' },
+      { heading: 'Walk the putt to calibrate feel', body: 'Before a long putt, walk the full length of it. Your body measures distance through movement far more accurately than your eyes do from address. Walking from ball to hole gives your subconscious the information it needs.' },
+      { heading: 'Pace before line — always', body: 'On lag putts, pace eliminates 3-putts. Line is secondary. A putt that stops 15 feet short on the correct line is a 3-putt. A putt that stops 3 feet away on a slightly wrong line is almost always a 2-putt.' },
+      { heading: 'Practise the 30-40-50 foot sequence', body: 'Set three balls at 30, 40, and 50 feet and putt all three to the same hole without moving. This forces continuous distance adjustment and mimics the varied distances you face on the course.' },
+      { heading: 'Never leave a session without long range work', body: 'One 3-putt avoided per round is worth more strokes over a season than almost anything else you can practise. Give long-range putting at least half your time on the green in every practice session.' }
+    ]
+  },
+  {
+    id: 'yips', name: 'The Yips',
+    intro: 'The yips are a physiological response to anxiety — an involuntary muscular twitch — not a technique problem. They require a different solution.',
+    points: [
+      { heading: 'What the yips actually are', body: 'The yips are an involuntary muscle spasm triggered by performance anxiety. The brain anticipates a high-stakes moment and fires the wrong signal at the worst moment. They typically appear on short putts, where the expectation of holing is highest. Trying harder makes them worse.' },
+      { heading: 'Alternative grips that interrupt the trigger', body: 'Cross-hand grip, the claw, and the arm-lock putter all work by removing the dominant hand\'s ability to twitch or fire. They disrupt the physical pattern the yip has attached itself to. Any significant grip change can reset the association.' },
+      { heading: 'The pre-stroke exhale', body: 'Before the stroke, exhale fully and completely. The yips are associated with held breath and physical tension. A full exhale releases tension in the forearms and chest, and closes the window in which the twitch fires.' },
+      { heading: 'Routine rigidity as armour', body: 'A rigid, repeated, automated pre-putt routine removes uncertainty from the putting process. The yips thrive in the moment of hesitation before the stroke. A strict routine fills that window with practised behaviour, leaving no space for the anxiety trigger.' },
+      { heading: 'Process focus, not outcome focus', body: 'Stop evaluating each putt as make or miss. Evaluate whether the routine was completed correctly and the stroke was committed to. A putt hit with a clean routine and committed stroke is a successful putt regardless of whether it goes in.' }
+    ]
+  }
+];
+
+function renderPutting() {
+  const grid = document.getElementById('puttingGrid');
+  if (!grid) return;
+  grid.innerHTML = PUTTING_TOPICS.map((topic, i) => `
+    <article class="putting-card" data-id="${topic.id}" style="--i:${i}"
+      role="button" tabindex="0" aria-label="View ${topic.name} guide">
+      <div class="pc-num">${String(i + 1).padStart(2, '0')}</div>
+      <h3 class="pc-name">${topic.name}</h3>
+      <p class="pc-intro">${topic.intro}</p>
+      <div class="pc-preview">
+        ${topic.points.slice(0, 2).map(p => `<span class="pc-preview-item">${p.heading}</span>`).join('')}
+        <span class="pc-preview-more">+${topic.points.length - 2} more</span>
+      </div>
+      <span class="sc-arrow" aria-hidden="true">→</span>
+    </article>
+  `).join('');
+
+  grid.querySelectorAll('.putting-card').forEach(card => {
+    const open = () => openPuttingPanel(card.dataset.id);
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+
+  requestAnimationFrame(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    grid.querySelectorAll('.putting-card').forEach(c => obs.observe(c));
+  });
+}
+
+function openPuttingPanel(id) {
+  const topic = PUTTING_TOPICS.find(t => t.id === id);
+  if (!topic) return;
+  const panel = document.getElementById('shotPanel');
+  const inner = document.getElementById('panelInner');
+  const overlay = document.getElementById('panelOverlay');
+
+  inner.innerHTML = `
+    <div class="panel-scroll">
+      <button class="panel-close" id="panelClose" aria-label="Close">&#x2715;</button>
+      <div class="panel-head">
+        <span class="panel-badge" style="color:var(--blue);background:rgba(61,124,201,0.1);border-color:rgba(61,124,201,0.25)">Putting</span>
+      </div>
+      <h2 class="panel-title">${topic.name}</h2>
+      <p class="panel-summary">${topic.intro}</p>
+      <div class="putting-points">
+        ${topic.points.map((p, i) => `
+          <div class="putting-point">
+            <div class="pp-header">
+              <span class="pp-num">${String(i + 1).padStart(2, '0')}</span>
+              <h4 class="pp-heading">${p.heading}</h4>
+            </div>
+            <p class="pp-body">${p.body}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  panel.removeAttribute('aria-hidden');
+  overlay.classList.add('active');
+  document.body.classList.add('panel-open');
+  inner.querySelector('#panelClose').addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel, { once: true });
+  inner.querySelector('#panelClose').focus();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RULES OF GOLF
+═══════════════════════════════════════════════════════════════ */
+const RULES = [
+  {
+    situation: 'Unplayable Lie', rule: 'Rule 19',
+    penalty: '1 stroke', penaltyType: 'penalty',
+    procedure: 'Three options — choose one:',
+    options: [
+      'Stroke and distance — return to where you last played and replay',
+      'Back-on-the-line relief — drop anywhere on a line through the flag and your ball, as far back as you like',
+      'Lateral relief — drop within two club-lengths of the ball, not nearer the hole'
+    ],
+    note: 'Cannot declare unplayable in a penalty area — use penalty area relief instead.'
+  },
+  {
+    situation: 'Lost Ball', rule: 'Rule 18.2',
+    penalty: '1 stroke + distance', penaltyType: 'penalty',
+    procedure: 'Return to the spot of your last stroke and play again. Search limit is 3 minutes.',
+    options: [],
+    note: 'Play a provisional ball before searching if there\'s any chance the ball is lost — declare it as provisional before leaving the tee or fairway.'
+  },
+  {
+    situation: 'Out of Bounds', rule: 'Rule 18.2',
+    penalty: '1 stroke + distance', penaltyType: 'penalty',
+    procedure: 'Return to the spot of the previous stroke and play again. Effectively costs two shots on the card.',
+    options: [],
+    note: 'Play a provisional ball immediately if you think the ball may be OB. Declare "provisional ball" before playing it.'
+  },
+  {
+    situation: 'Red Penalty Area', rule: 'Rule 17',
+    penalty: '1 stroke', penaltyType: 'penalty',
+    procedure: 'Red-staked areas give three options:',
+    options: [
+      'Stroke and distance — replay from the previous spot',
+      'Back-on-the-line — drop on a line through the flag and where the ball crossed the margin, going as far back as you like',
+      'Lateral relief — drop within two club-lengths of where the ball crossed the margin, not nearer the hole'
+    ],
+    note: 'You may play the ball as it lies in a penalty area with no penalty if it is playable.'
+  },
+  {
+    situation: 'Yellow Penalty Area', rule: 'Rule 17',
+    penalty: '1 stroke', penaltyType: 'penalty',
+    procedure: 'Yellow-staked areas give only two options — no lateral relief:',
+    options: [
+      'Stroke and distance — replay from the previous spot',
+      'Back-on-the-line — drop on a line through the flag and where the ball crossed the margin, going as far back as you like'
+    ],
+    note: 'If unsure whether stakes are red or yellow, check the course scorecard or ask the pro shop.'
+  },
+  {
+    situation: 'Casual Water', rule: 'Rule 16.1',
+    penalty: 'Free relief', penaltyType: 'free',
+    procedure: 'Find the nearest point of complete relief (no interference to stance, swing, and ball). Drop within one club-length of that point, not nearer the hole.',
+    options: [],
+    note: 'Relief applies when your ball lies in casual water OR when it interferes with your stance. You don\'t have to be standing in it.'
+  },
+  {
+    situation: 'Immovable Obstruction', rule: 'Rule 16.1',
+    penalty: 'Free relief', penaltyType: 'free',
+    procedure: 'Cart paths, sprinkler heads, fixed signage. Find the nearest point of complete relief — where the obstruction no longer interferes with stance, swing, or ball — and drop within one club-length, not nearer the hole.',
+    options: [],
+    note: 'On the putting green, free relief also applies if the obstruction lies on your line of putt.'
+  },
+  {
+    situation: 'Embedded Ball', rule: 'Rule 16.3',
+    penalty: 'Free relief', penaltyType: 'free',
+    procedure: 'If your ball is embedded in its own pitch mark in the general area, lift, clean it, and drop directly behind the spot — as close as possible, not nearer the hole.',
+    options: [],
+    note: 'Applies in the general area only — not in bunkers or penalty areas. In a bunker, play it as it lies or take an unplayable (1 stroke).'
+  },
+  {
+    situation: 'Ground Under Repair', rule: 'Rule 16.1',
+    penalty: 'Free relief', penaltyType: 'free',
+    procedure: 'GUR is marked by white lines or signs. If your ball lies in GUR, or GUR interferes with your stance or swing, take free relief: nearest point of complete relief, drop within one club-length, not nearer the hole.',
+    options: [],
+    note: 'Material piled for removal is also GUR even without markings. Aeration holes are GUR on the putting green only.'
+  },
+  {
+    situation: 'Wrong Ball', rule: 'Rule 6.3',
+    penalty: '2 strokes', penaltyType: 'penalty',
+    procedure: 'If you play a stroke with someone else\'s ball, take 2 penalty strokes. Return to where the wrong ball was played from and play the correct ball.',
+    options: [],
+    note: 'No penalty for playing a wrong ball in a penalty area. Always mark your ball with a distinctive mark to prevent this.'
+  }
+];
+
+function renderRules() {
+  const grid = document.getElementById('rulesGrid');
+  if (!grid) return;
+  grid.innerHTML = RULES.map(rule => `
+    <div class="rule-card">
+      <div class="rule-top">
+        <div>
+          <h3 class="rule-situation">${rule.situation}</h3>
+          <span class="rule-ref">${rule.rule}</span>
+        </div>
+        <span class="rule-penalty-badge ${rule.penaltyType}">${rule.penalty}</span>
+      </div>
+      <p class="rule-procedure">${rule.procedure}</p>
+      ${rule.options.length ? `
+        <ul class="rule-options">
+          ${rule.options.map(o => `<li>${o}</li>`).join('')}
+        </ul>
+      ` : ''}
+      ${rule.note ? `<p class="rule-note">${rule.note}</p>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SWING FAULTS
+═══════════════════════════════════════════════════════════════ */
+const SWING_FAULTS = [
+  {
+    id: 'pull', symptom: 'goes-left', symptomLabel: 'Goes left',
+    name: 'Pull',
+    description: 'Ball starts left of target and continues straight left — no curve.',
+    causes: [
+      'Out-to-in swing path — cutting across the ball',
+      'Ball position too far forward in the stance',
+      'Shoulders open to the target at address or impact'
+    ],
+    fixes: [
+      'Drop the right foot back at address slightly to encourage an in-to-out path',
+      'Move the ball one ball-width back in the stance',
+      'Feel like you\'re swinging toward right field — not across the body'
+    ]
+  },
+  {
+    id: 'snap-hook', symptom: 'goes-left', symptomLabel: 'Goes left',
+    name: 'Hook / Snap Hook',
+    description: 'Ball starts right or straight and curves hard left — often severely.',
+    causes: [
+      'In-to-out path combined with a closed clubface',
+      'Over-rotation of the wrists through impact',
+      'Grip too strong causing the face to snap shut at impact'
+    ],
+    fixes: [
+      'Weaken the grip — rotate both hands anti-clockwise until you see 2 knuckles on the left hand',
+      'Feel the left arm pulling through and the right arm staying passive',
+      'Check the finish — a snap hook almost always comes with a low, wrapped finish; train for a higher finish'
+    ]
+  },
+  {
+    id: 'slice', symptom: 'goes-right', symptomLabel: 'Goes right',
+    name: 'Slice',
+    description: 'Ball starts left or straight and curves significantly right — the most common fault in amateur golf.',
+    causes: [
+      'Out-to-in swing path with an open clubface at impact',
+      'Weak grip causing the face to remain open through impact',
+      'Early extension — standing up out of the shot, reducing rotation'
+    ],
+    fixes: [
+      'Strengthen the grip — rotate both hands clockwise until you see 2–3 knuckles on the left hand',
+      'Feel like you\'re hitting the inside half of the ball — the four o\'clock position',
+      'Drive the right hip through impact rather than spinning the shoulders; stay in posture throughout'
+    ]
+  },
+  {
+    id: 'push', symptom: 'goes-right', symptomLabel: 'Goes right',
+    name: 'Push',
+    description: 'Ball starts right of target and continues straight right — no curve.',
+    causes: [
+      'In-to-out swing path with a square or open face',
+      'Hands too far ahead at impact, blocking the release',
+      'Weight failing to transfer to the lead side through impact'
+    ],
+    fixes: [
+      'Ensure weight fully transfers to the lead side — feel the left heel planted and the right heel lifting',
+      'Feel the right palm facing the target at impact, not facing the sky',
+      'Check alignment — a push often results from a closed stance overcompensation'
+    ]
+  },
+  {
+    id: 'fat', symptom: 'contact', symptomLabel: 'Fat / Heavy',
+    name: 'Fat / Heavy',
+    description: 'Club strikes the ground before the ball — shot comes up well short with a thud.',
+    causes: [
+      'Low point too far behind the ball — the swing arc bottoms out early',
+      'Weight staying on the trail side through impact',
+      'Early release of the wrists (casting) losing the lag angle'
+    ],
+    fixes: [
+      'Preset more weight on the lead side at address — 55–60% before the swing starts',
+      'Feel the hands pressing slightly forward at impact — shaft leaning toward the target',
+      'Towel drill: place a towel 4 inches behind the ball and practise missing it on the downswing'
+    ]
+  },
+  {
+    id: 'thin', symptom: 'contact', symptomLabel: 'Thin / Skull',
+    name: 'Thin / Skull',
+    description: 'Club strikes the equator of the ball or above — ball shoots low and hot, or along the ground.',
+    causes: [
+      'Early extension — standing up out of the shot through impact',
+      'Weight moving back onto the trail foot during the downswing',
+      'Trying to help the ball into the air rather than striking down'
+    ],
+    fixes: [
+      'Focus on the front edge of the ball and keep your eyes there through impact',
+      'Feel like your chest stays over the ball as you swing — do not let it rise',
+      'Keep the right shoulder working downward through impact, not upward'
+    ]
+  },
+  {
+    id: 'shank', symptom: 'contact', symptomLabel: 'Shank',
+    name: 'Shank',
+    description: 'Ball strikes the hosel and shoots low and sharply right — one of golf\'s most alarming shots.',
+    causes: [
+      'Moving toward the ball during the downswing, presenting the hosel first',
+      'Swing path coming too far from inside, rotating the hosel into contact',
+      'Hands too far from the body at impact'
+    ],
+    fixes: [
+      'Set up with the toe of the club pointing toward the ball — forces you to find the centre at impact',
+      'Feel like you\'re hitting the inside half of the ball — the four o\'clock position',
+      'Place a headcover 2 inches outside the ball at address: practise swinging without touching it'
+    ]
+  },
+  {
+    id: 'balloon', symptom: 'height', symptomLabel: 'Balloons',
+    name: 'Ball Balloons',
+    description: 'Ball launches high with excessive spin, losing distance — especially pronounced into wind.',
+    causes: [
+      'Steep angle of attack generating too much backspin',
+      'Trying to help the ball into the air rather than trusting the loft',
+      'Grip pressure too tight, creating tension and restricting release'
+    ],
+    fixes: [
+      'Move the ball back in the stance slightly — promotes a shallower, more sweeping attack angle',
+      'Swing more around the body and less steeply; feel the club tracking lower through the hitting zone',
+      'Lighten grip pressure — the club should feel like it could fall if you relaxed any further'
+    ]
+  },
+  {
+    id: 'loss-distance', symptom: 'distance', symptomLabel: 'Loss of distance',
+    name: 'Loss of Distance',
+    description: 'Shots consistently fall short — not from a specific contact fault but general lack of power.',
+    causes: [
+      'Insufficient rotation — arms swinging without the body turning',
+      'Tension throughout the swing reducing club head speed',
+      'Poor sequencing — upper body starting the downswing before the lower body'
+    ],
+    fixes: [
+      'Check grip pressure before every shot — aim for a 4 out of 10',
+      'Initiate the downswing with the lead hip moving toward the target — not the shoulders unwinding first',
+      'Finish with the chest fully facing the target and the right heel fully off the ground'
+    ]
+  },
+  {
+    id: 'inconsistent', symptom: 'distance', symptomLabel: 'Loss of distance',
+    name: 'Inconsistent Strike',
+    description: 'Varying contact — some shots solid, others thin or heavy — with no clear pattern.',
+    causes: [
+      'Inconsistent low point — the bottom of the swing arc moving between shots',
+      'Head moving laterally or vertically through impact',
+      'Varying ball position between shots without realising it'
+    ],
+    fixes: [
+      'Set a consistent ball position using a reference point every time — not feel alone',
+      'Practise with alignment sticks: one for ball position, one for alignment — remove the variables',
+      'Brush drill: make practice swings specifically to brush the same spot on the grass every time, then place the ball there'
+    ]
+  }
+];
+
+const FAULT_FILTERS = [
+  { value: 'all',       label: 'All faults' },
+  { value: 'goes-left', label: 'Goes left' },
+  { value: 'goes-right', label: 'Goes right' },
+  { value: 'contact',   label: 'Fat / Thin / Shank' },
+  { value: 'height',    label: 'Balloons' },
+  { value: 'distance',  label: 'Distance / Inconsistent' }
+];
+
+function renderFaultFilter() {
+  const filter = document.getElementById('faultFilter');
+  if (!filter) return;
+  filter.innerHTML = FAULT_FILTERS.map(f => `
+    <button class="fault-pill ${f.value === 'all' ? 'active' : ''}"
+      data-symptom="${f.value}" role="tab" aria-selected="${f.value === 'all'}"
+    >${f.label}</button>
+  `).join('');
+
+  filter.querySelectorAll('.fault-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filter.querySelectorAll('.fault-pill').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      renderFaults(btn.dataset.symptom);
+    });
+  });
+}
+
+function renderFaults(symptom) {
+  const grid = document.getElementById('faultsGrid');
+  if (!grid) return;
+  const filtered = symptom === 'all' ? SWING_FAULTS : SWING_FAULTS.filter(f => f.symptom === symptom);
+
+  grid.innerHTML = filtered.map((fault, i) => `
+    <div class="fault-card" style="--i:${i}">
+      <div class="fault-top">
+        <span class="fault-symptom-badge">${fault.symptomLabel}</span>
+        <h3 class="fault-name">${fault.name}</h3>
+        <p class="fault-desc">${fault.description}</p>
+      </div>
+      <div class="fault-columns">
+        <div class="fault-section">
+          <h4 class="fault-section-title">Likely causes</h4>
+          <ul class="fault-list fault-causes">
+            ${fault.causes.map(c => `<li>${c}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="fault-section">
+          <h4 class="fault-section-title">How to fix it</h4>
+          <ul class="fault-list fault-fixes">
+            ${fault.fixes.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  requestAnimationFrame(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.04 });
+    grid.querySelectorAll('.fault-card').forEach(c => obs.observe(c));
+  });
+}
+
+/* ── INIT NEW SECTIONS ── */
+renderPutting();
+renderRules();
+renderFaultFilter();
+renderFaults('all');

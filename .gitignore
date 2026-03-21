@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build artifacts (keep the analytics bundle committed for deployment)
+# js/analytics.bundle.js is intentionally committed
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
